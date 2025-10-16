@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->dateTime('starts_at');
             $table->foreignId('hall_id');
+            $table->foreignId('showing_id');
             $table->unsignedMediumInteger('price');
             $table->timestamps();
         });

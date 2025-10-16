@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Event;
 use App\Models\Hall;
+use App\Models\Showing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -20,6 +21,7 @@ class EventFactory extends Factory
             'updated_at' => Carbon::now(),
 
             'hall_id' => Hall::factory(),
+            'showing_id' => Showing::factory(),
         ];
     }
 }

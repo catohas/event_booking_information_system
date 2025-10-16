@@ -11,6 +11,7 @@ class EventRequest extends FormRequest
         return [
             'starts_at' => ['required', 'date'],
             'hall_id' => ['required', 'exists:halls'],
+            'showing_id' => ['required', 'exists:showings'],
             'price' => ['required', 'integer'],
         ];
     }
