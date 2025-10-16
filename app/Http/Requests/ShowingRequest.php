@@ -9,7 +9,6 @@ class ShowingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'event_id' => ['required', 'exists:events'],
             'name' => ['required'],
             'type' => ['required'],
             'description' => ['nullable'],

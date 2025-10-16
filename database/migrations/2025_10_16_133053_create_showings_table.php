@@ -9,7 +9,6 @@ return new class extends Migration {
     {
         Schema::create('showings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id');
             $table->string('name');
             $table->string('type');
             $table->string('description')->nullable();
