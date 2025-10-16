@@ -14,11 +14,11 @@ class ShowingFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'type' => $this->faker->word(),
+            'type' => $this->faker->randomElement(['Play', 'Movie', 'Musical']),
             'description' => $this->faker->text(),
             'length' => Carbon::now(),
-            'image_path' => $this->faker->word(),
-            'actors' => $this->faker->word(),
+            'image_path' => $this->faker->filePath(),
+            'actors' => $this->faker->name(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

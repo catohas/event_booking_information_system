@@ -12,12 +12,13 @@ class HallFactory extends Factory
 
     public function definition(): array
     {
+        $randomMinutes = rand(0, 24 * 60);
         return [
             'name' => $this->faker->name(),
-            'row_amt' => $this->faker->randomNumber(),
-            'col_amt' => $this->faker->randomNumber(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'row_amt' => $this->faker->randomDigitNotZero(),
+            'col_amt' => $this->faker->randomDigitNotZero(),
+            'created_at' => Carbon::now()->subMinutes($randomMinutes), // sometime in the last 24 hours
+            'updated_at' => Carbon::now()->subMinutes($randomMinutes),
         ];
     }
 }

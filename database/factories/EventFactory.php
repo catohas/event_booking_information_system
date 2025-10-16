@@ -14,11 +14,12 @@ class EventFactory extends Factory
 
     public function definition(): array
     {
+        $randomMinutes = rand(0, 24 * 60);
         return [
-            'starts_at' => Carbon::now(),
-            'price' => $this->faker->randomNumber(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'starts_at' => Carbon::now()->addMinutes($randomMinutes),
+            'price' => $this->faker->randomNumber(3),
+            'created_at' => Carbon::now()->subMinutes($randomMinutes),
+            'updated_at' => Carbon::now()->subMinutes($randomMinutes),
 
             'hall_id' => Hall::factory(),
             'showing_id' => Showing::factory(),
