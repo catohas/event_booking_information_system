@@ -10,8 +10,8 @@ return new class extends Migration {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->dateTime('starts_at');
-            $table->foreignId('hall_id');
-            $table->foreignId('showing_id');
+            $table->foreignId('hall_id')->constrained()->onDelete('cascade');
+            $table->foreignId('showing_id')->constrained()->onDelete('cascade');
             $table->unsignedMediumInteger('price');
             $table->timestamps();
         });

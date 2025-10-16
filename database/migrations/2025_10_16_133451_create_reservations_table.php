@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id');
-            $table->foreignId('user_id');
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->unsignedSmallInteger('seat_row');
             $table->unsignedSmallInteger('seat_col');
             $table->dateTime('paid_date')->nullable();
