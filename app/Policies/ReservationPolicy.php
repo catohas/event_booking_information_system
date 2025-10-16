@@ -12,30 +12,36 @@ class ReservationPolicy
 
     public function viewAny(User $user): bool
     {
-
+        return $user->role === 'admin' || $user->role == 'cashier';
     }
 
     public function view(User $user, Reservation $reservation): bool
     {
+        return $user->id === $reservation->user_id || $user->role === 'admin' || $user->role == 'cashier';
     }
 
     public function create(User $user): bool
     {
+        return true;
     }
 
     public function update(User $user, Reservation $reservation): bool
     {
+        return $user->role === 'admin' || $user->role === 'cashier';
     }
 
     public function delete(User $user, Reservation $reservation): bool
     {
+        return $user->id === $reservation->user_id || $user->role === 'admin' || $user->role === 'cashier';
     }
 
     public function restore(User $user, Reservation $reservation): bool
     {
+        return $user->role === 'admin' || $user->role === 'cashier';
     }
 
     public function forceDelete(User $user, Reservation $reservation): bool
     {
+        return $user->role === 'admin' || $user->role === 'cashier';
     }
 }
