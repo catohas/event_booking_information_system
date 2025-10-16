@@ -2,7 +2,8 @@
 
 ### Softwarové prerekvizity:
 1. https://laravel.com/docs/12.x/installation
-2. https://docs.docker.com/engine/install/
+2. https://nodejs.org/en (často se na instalaci používá tenhle nástroj https://github.com/nvm-sh/nvm)
+3. https://docs.docker.com/engine/install/
 
 Docker se hodí protože chtějí ať používámě nějakou klasickou databazi (ne sqlite), tím pádem docker zajišťuje menší otravu se setupem. \
 Automaticky se pustí se dva kontejnery kde jeden je PHP backend co tvoří odpovědi na requesty a druhý je MySQL databáze. \
@@ -10,9 +11,10 @@ Tohle se bude hodit až pak budeme muset projekt deploynout někam na internet a
 
 ### Jak to zprovoznit:
 
-#### Pomocí:
+Po klonování repositáře z githubu se musí nainstalovat potřebné balíčky: `composer setup` \
+Toto stáhne potřebné PHP balíčky (backend) a i NodeJS balíčky (frontend).
 
-> Pomocného wrapperu kolem docker příkazů. \
+> Spuštění probíhá s pomocným wrapperem kolem docker příkazů. \
 > https://laravel.com/docs/12.x/sail#configuring-a-shell-alias \
 > `./vendor/bin/sail up` pustí oba kontejnery s PHP backendem a MySQL databází (při prvním spuštění to trvá chvilku než to vytvoří custom docker kontejnery)
 
