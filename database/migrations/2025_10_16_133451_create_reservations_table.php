@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
+            $table->foreignId('user_id');
             $table->unsignedSmallInteger('seat_row');
             $table->unsignedSmallInteger('seat_col');
             $table->dateTime('paid_date')->nullable();
