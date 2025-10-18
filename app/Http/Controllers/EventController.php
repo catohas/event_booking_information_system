@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
+use App\Http\Resources\EventResource;
 use App\Models\Event;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,7 +15,9 @@ class EventController extends Controller
     {
         $this->authorize('viewAny', Event::class);
 
-        return Event::all();
+        return EventResource::collection(
+            Event::with(['hall', 'showing', 'reservations'])->get()
+        );
     }
 
     public function store(EventRequest $request)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\HallRequest;
+use App\Http\Resources\HallResource;
 use App\Models\Hall;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,7 +15,7 @@ class HallController extends Controller
     {
         $this->authorize('viewAny', Hall::class);
 
-        return Hall::all();
+        return HallResource::collection(Hall::all());
     }
 
     public function store(HallRequest $request)

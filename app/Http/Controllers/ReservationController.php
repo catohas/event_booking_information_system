@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
+use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,7 +15,7 @@ class ReservationController extends Controller
     {
         $this->authorize('viewAny', Reservation::class);
 
-        return Reservation::all();
+        return ReservationResource::collection(Reservation::all());
     }
 
     public function store(ReservationRequest $request)

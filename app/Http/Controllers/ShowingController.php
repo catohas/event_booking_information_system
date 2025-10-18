@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShowingRequest;
+use App\Http\Resources\ShowingResource;
 use App\Models\Showing;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,7 +15,7 @@ class ShowingController extends Controller
     {
         $this->authorize('viewAny', Showing::class);
 
-        return Showing::all();
+        return ShowingResource::collection(Showing::all());
     }
 
     public function store(ShowingRequest $request)
