@@ -14,17 +14,46 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
                 'password' => 'password',
+                'role' => 'viewer',
                 'email_verified_at' => now(),
             ]
         );
 
-        $this->call([
-            EventSeeder::class,
-        ]);
+         User::firstOrCreate(
+            ['email' => 'admin@a.com'],
+            [
+                'name' => 'Admin User',
+                'password' => 'admin',
+                'role' => 'admin',
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'cashier@c.com'],
+            [
+                'name' => 'Cashier User',
+                'password' => 'cashier',
+                'role' => 'cashier',
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'redactor@r.com'],
+            [
+                'name' => 'Redactor User',
+                'password' => 'redactor',
+                'role' => 'redactor',
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $this->callWith(EventSeeder::class, ['user' => $user]);
     }
 }
