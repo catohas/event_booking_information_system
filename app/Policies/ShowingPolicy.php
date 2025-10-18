@@ -10,14 +10,14 @@ class ShowingPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(?User $user): bool
+    public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role == 'admin' || $user->role == 'redactor';
     }
 
     public function view(User $user, Showing $showing): bool
     {
-        return true;
+        return $user->role == 'admin' || $user->role == 'redactor';
     }
 
     public function create(User $user): bool
