@@ -18,7 +18,7 @@ class ReservationFactory extends Factory
         return [
             'seat_row' => $this->faker->randomDigitNotZero(),
             'seat_col' => $this->faker->randomDigitNotZero(),
-            'paid_date' => Carbon::now(),
+            'paid_date' => $this->faker->boolean ? Carbon::now() : null, // 50/50 chance of being paid
             'created_at' => Carbon::now()->subMinutes($randomMinutes),
             'updated_at' => Carbon::now()->subMinutes($randomMinutes),
 

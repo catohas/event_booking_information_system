@@ -13,7 +13,7 @@ class ShowingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => ucfirst(join(' ', $this->faker->words(2))),
             'type' => $this->faker->randomElement(['Play', 'Movie', 'Musical']),
             'description' => $this->faker->text(),
             'length' => Carbon::now(),

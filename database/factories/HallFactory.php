@@ -14,7 +14,7 @@ class HallFactory extends Factory
     {
         $randomMinutes = rand(0, 24 * 60);
         return [
-            'name' => $this->faker->name(),
+            'name' => ucfirst($this->faker->word()),
             'row_amt' => $this->faker->randomDigitNotZero(),
             'col_amt' => $this->faker->randomDigitNotZero(),
             'created_at' => Carbon::now()->subMinutes($randomMinutes), // sometime in the last 24 hours
