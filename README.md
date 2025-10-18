@@ -14,15 +14,27 @@ Tohle se bude hodit až pak budeme muset projekt deploynout někam na internet a
 Po klonování repositáře z githubu se musí nainstalovat potřebné balíčky: `composer setup` \
 Toto stáhne potřebné PHP balíčky (backend) a i NodeJS balíčky (frontend).
 
-> Spuštění probíhá s pomocným wrapperem kolem docker příkazů. \
-> https://laravel.com/docs/12.x/sail#configuring-a-shell-alias \
-> `./vendor/bin/sail up` pustí oba kontejnery s PHP backendem a MySQL databází (při prvním spuštění to trvá chvilku než to vytvoří custom docker kontejnery)
+Po spuštění příkazu `composer setup` se vytvoří `.env` soubor který obsahuje výchozí konfiguraci aplikace. \
+Jediné co v něm je potřeba změnit je nastavení přistupu do databáze, to jde udělat úpravou těchto řádků (změna z sqlite na mysql):
 
-V dokumentaci doporučují tento alias aby člověk nemusel furt psát `./vendor/bin/sail`:
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
+
+Spuštění probíhá s pomocným wrapperem kolem docker příkazů. \
+https://laravel.com/docs/12.x/sail#configuring-a-shell-alias \
+`./vendor/bin/sail up` pustí oba kontejnery s PHP backendem a MySQL databází (při prvním spuštění to trvá chvilku než to vytvoří custom docker kontejnery)
+
+V dokumentaci doporučují tento shell alias aby člověk nemusel furt psát `./vendor/bin/sail`:
 
 > `alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'`
 
-Při prvním spuštění to možná hodí že to nemůže najít nějakou tabulku z databáze, tyto commandy mně pomohly:
+Po prvním spuštění to možná hodí že to nemůže najít nějakou tabulku z databáze, tyto commandy mně pomohly:
 
 > `sail artisan session:table` \
 > `sail artisan migrate`
@@ -33,24 +45,24 @@ Při práci na frontendu je důležité si ještě pustit command:
 
 Jinak by se frontend při úpravách neaktualizoval, u PHP kódu backendu toto není problém protože se pouští při každém requestu takže tam se po uložených úpravách nový kód začne automaticky využívat i za běhu serveru.
 
-Ale frontend který se odesílá uživateli se bere ze složky `./public/build`, aby odsud byla přístupná nová verze tak se musí celá složka aktualizovat pomocí `sail npm run build`.
+Ale frontend který se odesílá uživateli se bere ze složky `./public/build`, aby odsud byla přístupná nová verze tak se může celá složka aktualizovat pomocí `sail npm run build`.
 
 Tohle je ale otrava dělat při každé změně takže `sail npm run dev` zajistí to aby se frontend automaticky aktualizoval (uživateli se pak odesílá zkompilovaná verze frontendu z paměti), když si toto zapomeneš pustit tak uvidíš neaktualizovanou verzi frontendu ze složky `./public/build`, pokud to teda nebuildneš ručně což je otrava furt dokola dělat.
 
-Hlavní kód backendu je ve složce `./app`, a frontendu v `./resources/js` (tady jsou právě nezkompilovaný soubory který využívají všechny možné knihovny a tomu prohlížeč sám o sobě nerozumí, takže se to pak kompiluje do šložky `./public/build`, dev server to překládá automaticky při změně a odesílá z paměti)
+Hlavní kód backendu je ve složce `./app`, a frontendu v `./resources/js` (tady jsou právě nezkompilovaný soubory který využívají všechny možné knihovny a tomu prohlížeč sám o sobě nerozumí, takže se to pak kompiluje do šložky `./public/build` a nebo `sail npm run dev` to překládá automaticky při změně a odesílá z paměti)
 
-Těch souborů je hromada a je to hezky popsané tady: \
+Těch souborů je v tom projektu hromada, jejich layout je hezky popsaný tady: \
 https://laravel.com/docs/12.x/structure
 
-Ta dokumentace je celkově dobrá, je tam odpověď skoro na všechno a je tam i docela dobrý search.
+Ta dokumentace je dobrá, je tam odpověď skoro na všechno a je tam i dobrý search.
 
-Ještě další knihovny které jsou součástí laravelu:
+Zde jsou ještě další knihovny které jsou součástí laravelu se kterými budeme pracovat:
 
-https://react.dev/ (frontend UI knihovna) (`./resources/js`) \
+https://react.dev/ (frontend UI knihovna) (využívají soubory ve: `./resources/js`) \
 https://inertiajs.com/ (umožňuje PHP backendu jednoduše vykreslovat UI v reactu a předávat mu data na zobrazení)\
-https://tailwindcss.com/docs/styling-with-utility-classes  (styly které jdou psát rovnou do UI aby jsme se nemuseli obtěžovat s CSS soubory)
+https://tailwindcss.com/docs/styling-with-utility-classes  (stylování frontendu které jde psát rovnou k UI aby jsme se nemuseli obtěžovat s CSS soubory)
 
-Diagramy databáze a use case (přihlášení se školním účtem) (ukradl jsem z IUSu):
+Diagramy databáze a use case (přihlášení se školním účtem) (ukradl jsem jako šablonu z IUSu):
 https://drive.google.com/drive/u/1/folders/1dUneJ2N_rKONvqNk1jdmgD-DESkVbOQX
 
 Bude nejlepší když si nejprve uděláme ty diagramy, pak můžeme udělat tu PHP logiku a nakonec to zobrazit ve frontendu, přece jenom i takovýto postup doporučují i v zadání.
