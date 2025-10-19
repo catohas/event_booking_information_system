@@ -1,5 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '@/components/ui/card';
-export default function EventList({ events }) {
+import { Event } from '@/types';
+import { useEffect } from 'react';
+import { InertiaLinkProps } from '@inertiajs/react';
+
+interface EventListProps {
+    events?: Event[];
+}
+
+export default function EventList({ events }: EventListProps) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
             {events.map((event) => {
@@ -37,6 +45,9 @@ export default function EventList({ events }) {
                             <p>{event.hall.row_amt * event.hall.col_amt} míst k sezení</p>
                             { /* <p>Reservations: {event.reservation_count}</p> */ }
                             <p>Price: {event.price} Kč</p>
+                            {/*
+                            <button className={"bg-gray-700 p-2 rounded cursor-pointer"}>View reservations</button>
+                            */}
                         </CardContent>
                     </Card>
                 );
