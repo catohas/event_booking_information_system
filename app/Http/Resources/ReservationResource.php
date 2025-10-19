@@ -20,7 +20,7 @@ class ReservationResource extends JsonResource
             'seat_col' => $this->seat_col,
             'paid_date' => $this->when($isAdminOrCashier, $this->paid_date),
             'created_at' => $this->when($isAdminOrCashier, $this->created_at),
-            //'updated_at' => $this->updated_at,
+            'updated_at' => $this->when($isAdminOrCashier, $this->updated_at),
             //'event' => new EventResource($this->whenLoaded('event')),
         ];
     }
