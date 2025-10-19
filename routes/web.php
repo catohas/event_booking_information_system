@@ -4,8 +4,10 @@ use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
+Route::get('/', function (EventController $eventController) {
+    return Inertia::render('welcome', [
+        'events' => $eventController->index()
+    ]);
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
