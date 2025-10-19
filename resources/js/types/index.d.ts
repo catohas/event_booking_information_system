@@ -41,3 +41,44 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Hall {
+    id?: number;
+    name: string;
+    row_amt: number;
+    col_amt: number;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface Showing {
+    id?: number;
+    name: string;
+    type: string;
+    description: string | null;
+    length: string;
+    image_path: string | null;
+    actors: string | null;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface Reservation {
+    id?: number;
+    seat_row: number;
+    seat_col: number;
+    paid_date?: string | null;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface Event {
+    id: number;
+    starts_at: string;
+    price: number;
+    created_at?: string;
+    updated_at?: string;
+    hall?: Hall;
+    showing?: Showing;
+    reservations?: Reservation[];
+}
