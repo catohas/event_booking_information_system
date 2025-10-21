@@ -1,10 +1,12 @@
 import { dashboard, login, register } from '@/routes';
-import { type SharedData } from '@/types';
+import { type SharedData, type Event } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import EventList from '@/pages/EventList';
 
 export default function Welcome() {
-    const { props } = usePage();
+    const { props } = usePage<{ events: { data: Event[] } }>();
+    const events = props.events.data;
+
     const { auth } = usePage<SharedData>().props;
 
     return (
@@ -47,7 +49,7 @@ export default function Welcome() {
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
                     <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
                         <div className="flex-1 rounded-xl bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-                            <EventList events={props.events.data} />
+                            <EventList events={events} />
                         </div>
                     </main>
                 </div>
