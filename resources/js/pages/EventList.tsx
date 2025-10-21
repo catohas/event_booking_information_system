@@ -2,9 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription }
 import { Event } from '@/types';
 import { useEffect } from 'react';
 import { InertiaLinkProps } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
+//import { index } from '@/actions/App/Http/Controllers/HallController';
+import { dashboard } from '@/routes/index';
 
 interface EventListProps {
-    events?: Event[];
+    events: Event[];
 }
 
 export default function EventList({ events }: EventListProps) {
@@ -48,6 +51,7 @@ export default function EventList({ events }: EventListProps) {
                             {/*
                             <button className={"bg-gray-700 p-2 rounded cursor-pointer"}>View reservations</button>
                             */}
+                            <Link href={`/events/${event.id}/reservations`} className={"bg-gray-700 active:bg-gray-600 p-2 rounded cursor-pointer"}>Zobrazit Rezervace</Link>
                         </CardContent>
                     </Card>
                 );
