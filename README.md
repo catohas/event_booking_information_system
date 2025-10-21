@@ -39,6 +39,14 @@ Po prvním spuštění to možná hodí že to nemůže najít nějakou tabulku 
 > `sail artisan session:table` \
 > `sail artisan migrate`
 
+Databázi lze vyplnit testovacími daty následujícím příkazem:
+
+> `sail artisan db:seed`
+ 
+Čistka databáze a vyplnění testovacími daty naráz lze udělat takto:
+
+> `sail artisan migrate:fresh --seed`
+
 Při práci na frontendu je důležité si ještě pustit command:
 
 > `sail npm run dev`
