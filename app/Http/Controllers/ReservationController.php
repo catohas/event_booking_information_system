@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
+use App\Http\Resources\EventResource;
+use App\Http\Resources\HallResource;
 use App\Http\Resources\ReservationResource;
+use App\Models\Event;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Inertia\Inertia;
 
 class ReservationController extends Controller
 {
@@ -49,4 +53,16 @@ class ReservationController extends Controller
 
         return response()->json();
     }
+
+    public function eventReservations(Event $event)
+    {
+        //$this->authorize('viewEvent', [Reservation::class, $event]);
+
+        return Inertia::render('reservations', [
+            'event' => new EventResource($event),
+            'hall' => new HallResource($event->hall),
+            'reservations' => ReservationResource::collection($event->reservations),
+        ]);
+    }
+
 }
