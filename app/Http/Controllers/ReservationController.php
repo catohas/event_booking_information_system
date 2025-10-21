@@ -58,10 +58,10 @@ class ReservationController extends Controller
     {
         //$this->authorize('viewEvent', [Reservation::class, $event]);
 
+        $event->load(['hall', 'showing', 'reservations']);
+
         return Inertia::render('reservations', [
             'event' => new EventResource($event),
-            'hall' => new HallResource($event->hall),
-            'reservations' => ReservationResource::collection($event->reservations),
         ]);
     }
 
