@@ -68,8 +68,8 @@ export interface Reservation {
     seat_row: number;
     seat_col: number;
     paid_date?: string | null;
-    created_at?: string;
-    updated_at?: string;
+    created_at?: string | null;
+    updated_at?: string | null;
 }
 
 export interface Event {
@@ -78,7 +78,12 @@ export interface Event {
     price: number;
     created_at?: string;
     updated_at?: string;
-    hall?: Hall;
-    showing?: Showing;
-    reservations?: Reservation[];
+    hall: Hall;
+    showing: Showing;
+    reservations: Reservation[];
+}
+
+export interface SelectedSeat {
+    seat_row: number;
+    seat_col: number;
 }
