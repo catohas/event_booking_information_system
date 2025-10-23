@@ -14,7 +14,7 @@ class ShowingFactory extends Factory
     {
         return [
             'name' => ucfirst(join(' ', $this->faker->words(2))),
-            'type' => $this->faker->randomElement(['Play', 'Movie', 'Musical']),
+            'type' => $this->faker->randomElement(['Divadlo', 'Film', 'Muzikál', 'Přednáška']),
             'description' => $this->faker->text(),
             'length' => Carbon::now(),
             'image_path' => $this->faker->filePath(),
