@@ -16,7 +16,9 @@ class EventController extends Controller
         $this->authorize('viewAny', Event::class);
 
         return EventResource::collection(
-            Event::with(['hall', 'showing', 'reservations'])->get()
+            Event::with(['hall', 'showing', 'reservations'])
+                ->orderBy('starts_at', 'asc')
+                ->get()
         );
     }
 
