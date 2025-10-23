@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RegisteredUserController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Show the registration page.
      */
@@ -48,5 +51,54 @@ class RegisteredUserController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
+    }
+
+    public function index()
+    {
+        $this->authorize('viewAny', User::class);
+
+        return Inertia::render('users/index', [
+            'users' => User::all()
+        ]);
+    }
+
+    /**
+     * Update the specified user.
+     */
+    public function update(Request $request, User $user): RedirectResponse
+    {
+        $this->authorize('update', $user);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:admin,redactor,cashier,viewer',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'role' => $request->role,
+        ]);
+
+        if (($request->user->id === $user->id) && $request->role != 'admin') {
+            return redirect('/');
+        }
+
+        return back()->with('success', 'User updated successfully.');
+    }
+
+    /**
+     * Remove the specified user.
+     */
+    public function destroy(Request $request, User $user): RedirectResponse
+    {
+        $this->authorize('delete', $user);
+
+        $user->delete();
+
+        if ($request->user()->id === $user->id) {
+            return redirect('/');
+        }
+
+        return back()->with('success', 'User deleted successfully.');
     }
 }
