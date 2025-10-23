@@ -33,10 +33,7 @@ export default function Reservations() {
                             Sál: {event.hall.name ?? '-'}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                            Datum: {event.starts_at ? new Date(event.starts_at).toLocaleDateString() : '-'}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                            Čas: {event.starts_at ? new Date(event.starts_at).toLocaleTimeString() : '-'}
+                            Datum: {event.starts_at ? new Date(event.starts_at).toLocaleDateString() + ' ' + new Date(event.starts_at).toLocaleTimeString() : '-'}
                         </p>
                         <p className="text-sm text-muted-foreground">
                             {event.hall.row_amt * event.hall.col_amt} Míst k sezení
