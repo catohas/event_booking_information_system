@@ -14,13 +14,14 @@ export default function EventList({ events }: EventListProps) {
                     <Card key={event.id} className="hover:shadow-md transition-shadow">
                         <CardHeader>
                             <CardTitle>{event.showing.name}</CardTitle>
-                            <CardDescription>{event.hall.name}</CardDescription>
+                            <CardDescription>Sál: {event.hall.name}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <p>Typ: {event.showing.type}</p>
                             <p>Datum: {new Date(event.starts_at).toLocaleDateString()}</p>
                             <p>Čas: {new Date(event.starts_at).toLocaleTimeString()}</p>
                             <p>{event.hall.row_amt * event.hall.col_amt} míst k sezení</p>
+                            <p>{(event.hall.row_amt * event.hall.col_amt) - event.reservations.length} dostupných míst</p>
                             <p>Cena za lístek: {event.price} Kč</p>
                             <Link href={`/events/${event.id}/reservations`} className={"bg-gray-700 hover:bg-gray-600 active:bg-gray-500 p-1 rounded cursor-pointer"}>Zobrazit Rezervace</Link>
                         </CardContent>
