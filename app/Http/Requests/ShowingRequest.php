@@ -9,12 +9,12 @@ class ShowingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'type' => ['required'],
-            'description' => ['nullable'],
-            'length' => ['required', 'date'],
-            'image_path' => ['nullable'],
-            'actors' => ['nullable'],
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'length' => ['required', 'date_format:H:i:s'],
+            'image' => ['nullable', 'image', 'max:2048'],
+            'actors' => ['nullable', 'string'],
         ];
     }
 

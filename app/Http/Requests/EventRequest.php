@@ -9,10 +9,10 @@ class EventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'starts_at' => ['required', 'date'],
-            'hall_id' => ['required', 'exists:halls'],
-            'showing_id' => ['required', 'exists:showings'],
-            'price' => ['required', 'integer'],
+            'starts_at' => ['required', 'date', 'after_or_equal:now'],
+            'hall_id' => ['required', 'integer', 'exists:halls,id'],
+            'showing_id' => ['required', 'integer', 'exists:showings,id'],
+            'price' => ['required', 'integer', 'min:0', 'max:16777215'],
         ];
     }
 

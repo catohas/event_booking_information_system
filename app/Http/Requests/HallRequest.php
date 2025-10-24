@@ -9,9 +9,9 @@ class HallRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'row_amt' => ['required', 'integer'],
-            'col_amt' => ['required', 'integer'],
+            'name' => ['required', 'string', 'max:255'],
+            'row_amt' => ['required', 'integer', 'min:1', 'max:65535'],
+            'col_amt' => ['required', 'integer', 'min:1', 'max:65535'],
         ];
     }
 
