@@ -95,7 +95,7 @@ function TwoFactorSetupStep({
                     <div className="relative flex w-full items-center justify-center">
                         <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
                         <span className="relative bg-card px-2 py-1">
-                            or, enter the code manually
+                            nebo zadejte kód ručně
                         </span>
                     </div>
 
@@ -200,7 +200,7 @@ function TwoFactorVerificationStep({
                                 onClick={onBack}
                                 disabled={processing}
                             >
-                                Back
+                                Zpět
                             </Button>
                             <Button
                                 type="submit"
@@ -209,7 +209,7 @@ function TwoFactorVerificationStep({
                                     processing || code.length < OTP_MAX_LENGTH
                                 }
                             >
-                                Confirm
+                                Potvrdit
                             </Button>
                         </div>
                     </div>
@@ -252,27 +252,27 @@ export default function TwoFactorSetupModal({
     }>(() => {
         if (twoFactorEnabled) {
             return {
-                title: 'Two-Factor Authentication Enabled',
+                title: 'Dvoufaktorová autentizace zapnuta',
                 description:
-                    'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
-                buttonText: 'Close',
+                    'Dvoufaktorová autentizace je nyní zapnuta. Naskenujte QR kód nebo zadejte kód do své autentizační aplikace.',
+                buttonText: 'Zavřít',
             };
         }
 
         if (showVerificationStep) {
             return {
-                title: 'Verify Authentication Code',
+                title: 'Ověřit autentizační kód',
                 description:
-                    'Enter the 6-digit code from your authenticator app',
-                buttonText: 'Continue',
+                    'Zadejte 6-místný kód z vaší autentizační aplikace',
+                buttonText: 'Pokračovat',
             };
         }
 
         return {
-            title: 'Enable Two-Factor Authentication',
+            title: 'Zapnout dvoufaktorovou autentizaci',
             description:
-                'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
-            buttonText: 'Continue',
+                'Pro dokončení zapnutí dvoufaktorové autentizace naskenujte QR kód nebo zadejte kód do své autentizační aplikace',
+            buttonText: 'Pokračovat',
         };
     }, [twoFactorEnabled, showVerificationStep]);
 

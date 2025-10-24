@@ -57,11 +57,11 @@ export default function TwoFactorRecoveryCodes({
             <CardHeader>
                 <CardTitle className="flex gap-3">
                     <LockKeyhole className="size-4" aria-hidden="true" />
-                    2FA Recovery Codes
+                    Záložní kódy pro 2FA
                 </CardTitle>
                 <CardDescription>
-                    Recovery codes let you regain access if you lose your 2FA
-                    device. Store them in a secure password manager.
+                    Záložní kódy vám umožní získat přístup, pokud ztratíte své 2FA
+                    zařízení. Uložte je do zabezpečeného správce hesel.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -76,7 +76,7 @@ export default function TwoFactorRecoveryCodes({
                             className="size-4"
                             aria-hidden="true"
                         />
-                        {codesAreVisible ? 'Hide' : 'View'} Recovery Codes
+                        {codesAreVisible ? 'Skrýt' : 'Zobrazit'} záložní kódy
                     </Button>
 
                     {canRegenerateCodes && (
@@ -92,7 +92,7 @@ export default function TwoFactorRecoveryCodes({
                                     disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
-                                    <RefreshCw /> Regenerate Codes
+                                    <RefreshCw /> Znovu vygenerovat kódy
                                 </Button>
                             )}
                         </Form>
@@ -145,13 +145,13 @@ export default function TwoFactorRecoveryCodes({
 
                                 <div className="text-xs text-muted-foreground select-none">
                                     <p id="regenerate-warning">
-                                        Each recovery code can be used once to
-                                        access your account and will be removed
-                                        after use. If you need more, click{' '}
+                                        Každý záložní kód lze použít jednou pro
+                                        přístup k vašemu účtu a bude po použití odstraněn.
+                                        Pokud potřebujete více, klikněte na{' '}
                                         <span className="font-bold">
-                                            Regenerate Codes
+                                            Znovu vygenerovat kódy
                                         </span>{' '}
-                                        above.
+                                        výše.
                                     </p>
                                 </div>
                             </>

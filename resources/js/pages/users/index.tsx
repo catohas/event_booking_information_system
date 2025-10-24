@@ -39,7 +39,7 @@ import { useState, FormEvent } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Users',
+        title: 'Uživatelé',
         href: '/users',
     },
 ];
@@ -52,7 +52,7 @@ export default function UsersIndex({ users }: UsersIndexProps) {
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [deletingUser, setDeletingUser] = useState<User | null>(null);
 
-    const { data, setData, patch, processing, errors, reset } = useForm({
+    const { data, setData, processing, errors, reset } = useForm({
         name: '',
         role: 'viewer' as User['role'],
     });
@@ -165,15 +165,15 @@ export default function UsersIndex({ users }: UsersIndexProps) {
             <Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Edit User</DialogTitle>
+                        <DialogTitle>Upravit uživatele</DialogTitle>
                         <DialogDescription>
-                            Update user information and role
+                            Upravit informace a roli uživatele
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleUpdate}>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">Jméno</Label>
                                 <Input
                                     id="name"
                                     value={data.name}
@@ -201,16 +201,16 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="admin">
-                                            Admin
+                                            Administrátor
                                         </SelectItem>
                                         <SelectItem value="redactor">
-                                            Redactor
+                                            Redaktor
                                         </SelectItem>
                                         <SelectItem value="cashier">
-                                            Cashier
+                                            Pokladní
                                         </SelectItem>
                                         <SelectItem value="viewer">
-                                            Viewer
+                                            Divák
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -227,10 +227,10 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                                 variant="outline"
                                 onClick={() => setEditingUser(null)}
                             >
-                                Cancel
+                                Zrušit
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                Save Changes
+                                Uložit změny
                             </Button>
                         </DialogFooter>
                     </form>
@@ -244,10 +244,10 @@ export default function UsersIndex({ users }: UsersIndexProps) {
             >
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Delete User</DialogTitle>
+                        <DialogTitle>Smazat uživatele</DialogTitle>
                         <DialogDescription>
-                            Are you sure you want to delete {deletingUser?.name}?
-                            This action cannot be undone.
+                            Opravdu chcete smazat uživatele {deletingUser?.name}?
+                            Tuto akci nelze vrátit zpět.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -256,14 +256,14 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                             variant="outline"
                             onClick={() => setDeletingUser(null)}
                         >
-                            Cancel
+                            Zrušit
                         </Button>
                         <Button
                             type="button"
                             variant="destructive"
                             onClick={handleDelete}
                         >
-                            Delete
+                            Smazat
                         </Button>
                     </DialogFooter>
                 </DialogContent>
