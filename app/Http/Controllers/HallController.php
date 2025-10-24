@@ -22,7 +22,9 @@ class HallController extends Controller
     {
         $this->authorize('create', Hall::class);
 
-        return Hall::create($request->validated());
+        Hall::create($request->validated());
+
+        return back()->with('success', 'Sál úspěšně vytvořen.');
     }
 
     public function show(Hall $hall)
@@ -36,17 +38,27 @@ class HallController extends Controller
     {
         $this->authorize('update', $hall);
 
-        $hall->update($request->validated());
+        try {
+            $hall->updateOrFail($request->validated());
+            return back()->with('success', 'Sál úspěšně upraven.');
+        }
+        catch (\Throwable $e) {
+            return back()->with('error', 'Sál se nepodařilo upravit.');
+        }
 
-        return $hall;
     }
 
     public function destroy(Hall $hall)
     {
         $this->authorize('delete', $hall);
 
-        $hall->delete();
+        try {
+            $hall->delete();
+            return back()->with('success', 'Sál úspěšně smazán.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error', 'Sál se nepodařilo smazat.');
+        }
 
-        return response()->json();
     }
 }

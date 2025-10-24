@@ -6,6 +6,8 @@ use App\Http\Requests\ShowingRequest;
 use App\Http\Resources\ShowingResource;
 use App\Models\Showing;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ShowingController extends Controller
 {
@@ -22,7 +24,15 @@ class ShowingController extends Controller
     {
         $this->authorize('create', Showing::class);
 
-        return Showing::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('images', 'public');
+        }
+
+        Showing::create($data);
+
+        return back()->with('success', 'Představení úspěšně vytvořeno.');
     }
 
     public function show(Showing $showing)
@@ -36,17 +46,42 @@ class ShowingController extends Controller
     {
         $this->authorize('update', $showing);
 
-        $showing->update($request->validated());
+        $data = $request->validated();
 
-        return $showing;
+        if ($request->hasFile('image')) {
+
+            // delete old image if exists
+            if ($showing->image_path) {
+                Storage::disk('public')->delete($showing->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('images', 'public');
+        }
+
+        try {
+            $showing->updateOrFail($data);
+            return back()->with('success', 'Představení úspěšně upraveno.');
+        }
+        catch (\Throwable $e) {
+            return back()->with('error', 'Představení se nepodařilo upravit.');
+        }
+
     }
 
     public function destroy(Showing $showing)
     {
         $this->authorize('delete', $showing);
 
-        $showing->delete();
+        if ($showing->image_path) {
+            Storage::disk('public')->delete($showing->image_path);
+        }
 
-        return response()->json();
+        try {
+            $showing->delete();
+            return back()->with('success', 'Představení úspěšně smazáno.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error', 'Představení se nepodařilo smazat.');
+        }
+
     }
 }

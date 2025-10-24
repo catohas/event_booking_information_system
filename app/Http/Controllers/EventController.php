@@ -26,7 +26,9 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        return Event::create($request->validated());
+        Event::create($request->validated());
+
+        return back()->with('success', 'Událost úspěšně vytvořena.');
     }
 
     public function show(Event $event)
@@ -40,17 +42,26 @@ class EventController extends Controller
     {
         $this->authorize('update', $event);
 
-        $event->update($request->validated());
-
-        return $event;
+        try {
+            $event->updateOrFail($request->validated());
+            return back()->with('success', 'Událost úspěšně upravena.');
+        }
+        catch (\Throwable $e) {
+            return back()->with('error', 'Událost se nepodařilo upravit.');
+        }
     }
 
     public function destroy(Event $event)
     {
         $this->authorize('delete', $event);
 
-        $event->delete();
+        try {
+            $event->delete();
+            return back()->with('success', 'Událost úspěšně smazána.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error', 'Událost se nepodařilo smazat.');
+        }
 
-        return response()->json();
     }
 }
