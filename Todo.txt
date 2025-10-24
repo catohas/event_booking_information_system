@@ -1,3 +1,4 @@
 - check if 'role' should be fillable on user
 - admin/redactor should get notified when deleted hall/showing has associated events with it
 - users should get shown reason why their reservation got cancelled (did not pay in time/got deleted)
+- when editing event, hall field should be mandatory
