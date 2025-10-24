@@ -19,10 +19,10 @@ interface LoginProps {
 export default function Login({ status, canResetPassword }: LoginProps) {
     return (
         <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
+            title="Přihlásit se k účtu"
+            description="Zadejte svůj email a heslo pro přihlášení"
         >
-            <Head title="Log in" />
+            <Head title="Přihlášení" />
 
             <Form
                 {...AuthenticatedSessionController.store.form()}
@@ -33,7 +33,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">Emailová adresa</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -49,14 +49,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label htmlFor="password">Heslo</Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
                                             className="ml-auto text-sm"
                                             tabIndex={5}
                                         >
-                                            Forgot password?
+                                            Zapomenuté heslo?
                                         </TextLink>
                                     )}
                                 </div>
@@ -67,7 +67,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder="Heslo"
                                 />
                                 <InputError message={errors.password} />
                             </div>
@@ -78,7 +78,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Label htmlFor="remember">Zapamatovat si mě</Label>
                             </div>
 
                             <Button
@@ -89,14 +89,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                Log in
+                                Přihlásit se
                             </Button>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
+                            Nemáte účet?{' '}
                             <TextLink href={register()} tabIndex={5}>
-                                Sign up
+                                Registrovat se
                             </TextLink>
                         </div>
                     </>

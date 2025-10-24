@@ -18,12 +18,12 @@ import AppLogo from './app-logo';
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
+        title: 'Repozitář',
         href: 'https://github.com/laravel/react-starter-kit',
         icon: Folder,
     },
     {
-        title: 'Documentation',
+        title: 'Dokumentace',
         href: 'https://laravel.com/docs/starter-kits#react',
         icon: BookOpen,
     },
@@ -35,7 +35,7 @@ export function AppSidebar() {
 
     const mainNavItems: NavItem[] = [
         {
-            title: 'Dashboard',
+            title: 'Nástěnka',
             href: dashboard(),
             icon: LayoutGrid,
         },
@@ -43,7 +43,7 @@ export function AppSidebar() {
 
     if (auth.user && auth.user.role === 'admin') {
         mainNavItems.push({
-            title: 'Users',
+            title: 'Uživatelé',
             href: '/users',
             icon: Users,
         });

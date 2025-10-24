@@ -16,10 +16,10 @@ interface ResetPasswordProps {
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
     return (
         <AuthLayout
-            title="Reset password"
-            description="Please enter your new password below"
+            title="Obnovit heslo"
+            description="Prosím zadejte své nové heslo"
         >
-            <Head title="Reset password" />
+            <Head title="Obnovit heslo" />
 
             <Form
                 {...NewPasswordController.store.form()}
@@ -46,7 +46,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Heslo</Label>
                             <Input
                                 id="password"
                                 type="password"
@@ -54,14 +54,14 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                                 autoComplete="new-password"
                                 className="mt-1 block w-full"
                                 autoFocus
-                                placeholder="Password"
+                                placeholder="Heslo"
                             />
                             <InputError message={errors.password} />
                         </div>
 
                         <div className="grid gap-2">
                             <Label htmlFor="password_confirmation">
-                                Confirm password
+                                Potvrzení hesla
                             </Label>
                             <Input
                                 id="password_confirmation"
@@ -69,7 +69,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                                 name="password_confirmation"
                                 autoComplete="new-password"
                                 className="mt-1 block w-full"
-                                placeholder="Confirm password"
+                                placeholder="Potvrzení hesla"
                             />
                             <InputError
                                 message={errors.password_confirmation}
@@ -84,7 +84,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                             data-test="reset-password-button"
                         >
                             {processing && <Spinner />}
-                            Reset password
+                            Obnovit heslo
                         </Button>
                     </div>
                 )}

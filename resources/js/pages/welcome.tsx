@@ -6,7 +6,7 @@ import AppLayout from '@/layouts/app-layout';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Welcome',
+        title: 'Vítejte',
         href: '/',
     },
 ];
@@ -19,7 +19,7 @@ export default function Welcome() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Welcome">
+            <Head title="Vítejte">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link
                     href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600"

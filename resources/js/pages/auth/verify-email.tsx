@@ -11,15 +11,15 @@ import AuthLayout from '@/layouts/auth-layout';
 export default function VerifyEmail({ status }: { status?: string }) {
     return (
         <AuthLayout
-            title="Verify email"
-            description="Please verify your email address by clicking on the link we just emailed to you."
+            title="Ověřit email"
+            description="Prosím ověřte svou emailovou adresu kliknutím na odkaz, který jsme vám právě zaslali."
         >
-            <Head title="Email verification" />
+            <Head title="Ověření emailu" />
 
             {status === 'verification-link-sent' && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    Nový ověřovací odkaz byl odeslán na emailovou adresu,
+                    kterou jste uvedli při registraci.
                 </div>
             )}
 
@@ -31,14 +31,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     <>
                         <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}
-                            Resend verification email
+                            Znovu odeslat ověřovací email
                         </Button>
 
                         <TextLink
                             href={logout()}
                             className="mx-auto block text-sm"
                         >
-                            Log out
+                            Odhlásit se
                         </TextLink>
                     </>
                 )}
