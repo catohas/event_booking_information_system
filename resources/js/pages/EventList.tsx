@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Event } from '@/types';
 import { Link } from '@inertiajs/react';
+import { Film } from 'lucide-react';
 
 interface EventListProps {
     events: Event[];
@@ -11,7 +12,21 @@ export default function EventList({ events }: EventListProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
             {events.map((event) => {
                 return (
-                    <Card key={event.id} className="hover:shadow-md transition-shadow">
+                    <Card key={event.id} className="hover:shadow-md transition-shadow overflow-hidden">
+                        <div className="relative w-full h-48 bg-gray-200 dark:bg-gray-800">
+                            {event.showing.image_path ? (
+                                <img
+                                    src={`/storage/${event.showing.image_path}`}
+                                    alt={event.showing.name}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                    <Film className="w-16 h-16 text-gray-400 dark:text-gray-600" />
+                                </div>
+                            )}
+                        </div>
+
                         <CardHeader>
                             <CardTitle>{event.showing.name}</CardTitle>
                             <CardDescription>Sál: {event.hall.name}</CardDescription>
