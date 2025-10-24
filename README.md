@@ -47,6 +47,9 @@ Databázi lze vyplnit testovacími daty následujícím příkazem:
 
 > `sail artisan migrate:fresh --seed`
 
+Pro umožnění načítání obrázků které nahráli uživatelé je nutno spustit tento command:
+> `sail artisan storage:link`
+
 Při práci na frontendu je důležité si ještě pustit command:
 
 > `sail npm run dev`
