@@ -10,6 +10,15 @@ class Showing extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'type',
+        'description',
+        'length',
+        'image_path',
+        'actors',
+    ];
+
     public function event(): HasMany
     {
         return $this->hasMany(Event::class);
