@@ -3,6 +3,7 @@ import { type SharedData, type Event, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import EventList from '@/pages/EventList';
 import AppLayout from '@/layouts/app-layout';
+import { Film } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -26,35 +27,70 @@ export default function Welcome() {
                     rel="stylesheet"
                 />
             </Head>
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-                <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-                    <nav className="flex items-center justify-end gap-4">
+            <div className="min-h-screen">
+                {/* Hero Section */}
+                <div className="relative overflow-hidden">
+
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+                        {/* Auth buttons in top right */}
                         {!auth.user && (
-                            <>
+                            <div className="absolute top-6 right-6 flex items-center gap-3">
                                 <Link
                                     href={login()}
-                                    className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
+                                    className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
                                 >
                                     Přihlášení
                                 </Link>
                                 <Link
                                     href={register()}
-                                    className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
+                                    className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
                                 >
                                     Registrace
                                 </Link>
-                            </>
+                            </div>
                         )}
-                    </nav>
-                </header>
-                <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
-                        <div className="flex-1 rounded-xl bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-                            {events.length ? <EventList events={events} /> : "Zatím zde nejsou vystaveny žádné události"}
+
+                        {/* Header content */}
+                        <div className="text-center space-y-6 max-w-3xl mx-auto">
+                            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                Aktuální program
+                            </h1>
+
+                            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                                Vyberte si z naší nabídky představení a rezervujte si místa
+                            </p>
                         </div>
-                    </main>
+                    </div>
                 </div>
-                <div className="hidden h-14.5 lg:block"></div>
+
+                {/* Events Section */}
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+                    {events.length ? (
+                        <div className="space-y-8">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    Nadcházející události
+                                </h2>
+                                <span className="text-md text-gray-500 dark:text-gray-400">
+                                    {events.length} {events.length === 1 ? 'událost' : events.length < 5 ? 'události' : 'událostí'}
+                                </span>
+                            </div>
+                            <EventList events={events} />
+                        </div>
+                    ) : (
+                        <div className="text-center py-20">
+                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+                                <Film className="w-8 h-8 text-gray-900 dark:text-white" />
+                            </div>
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                Žádné nadcházející události
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                Zatím zde nejsou vystaveny žádné události. Vraťte se prosím později.
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
         </AppLayout>
     );
