@@ -17,7 +17,7 @@ class ShowingFactory extends Factory
             'type' => $this->faker->randomElement(['Divadlo', 'Film', 'Muzikál', 'Přednáška']),
             'description' => $this->faker->text(),
             'length' => Carbon::now(),
-            'image_path' => $this->faker->filePath(),
+            'image_path' => null,
             'actors' => $this->faker->name(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
