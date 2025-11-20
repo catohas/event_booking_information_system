@@ -83,7 +83,7 @@ class RegisteredUserController extends Controller
             return redirect('/');
         }
 
-        return back()->with('success', 'User updated successfully.');
+        return back()->with('success', 'Uživatel úspěšně upraven.');
     }
 
     /**
@@ -99,6 +99,6 @@ class RegisteredUserController extends Controller
             return redirect('/');
         }
 
-        return back()->with('success', 'User deleted successfully.');
+        return back()->with('success', 'Uživatel úspěšně smazán.');
     }
 }
