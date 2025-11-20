@@ -13,17 +13,30 @@ class ReservationResource extends JsonResource
     {
         $user = $request->user();
         $isAdminOrCashier = $user && in_array($user->role, ['admin', 'cashier']);
+        $isOwner = $user && $this->user_id === $user->id;
 
         return [
-            'id' => $this->when($isAdminOrCashier, $this->id),
+            'id' => $this->when($isAdminOrCashier || $isOwner, $this->id),
             //'event_id' => $this->event_id,
             'user_id' => $this->when($isAdminOrCashier, $this->user_id),
+            'session_id' => $this->when($isAdminOrCashier, $this->session_id),
             'seat_row' => $this->seat_row,
             'seat_col' => $this->seat_col,
-            'paid_date' => $this->when($isAdminOrCashier, $this->paid_date),
-            'created_at' => $this->when($isAdminOrCashier, $this->created_at),
-            'updated_at' => $this->when($isAdminOrCashier, $this->updated_at),
-            //'event' => new EventResource($this->whenLoaded('event')),
+            'status' => $this->when($isAdminOrCashier || $isOwner, $this->status),
+            'paid_date' => $this->when($isAdminOrCashier || $isOwner, $this->paid_date),
+            'created_at' => $this->when($isAdminOrCashier || $isOwner, $this->created_at),
+            'updated_at' => $this->when($isAdminOrCashier || $isOwner, $this->updated_at),
+            'event' => $this->when($isAdminOrCashier || $isOwner, new EventResource($this->whenLoaded('event'))),
+            'user' => $this->when($isAdminOrCashier, function () {
+                if ($this->relationLoaded('user')) {
+                    return [
+                        'id' => $this->user->id,
+                        'name' => $this->user->name,
+                        'email' => $this->user->email,
+                    ];
+                }
+                return null;
+            }),
         ];
     }
 }

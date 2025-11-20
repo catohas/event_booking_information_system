@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { BookOpen, Folder, Users } from 'lucide-react';
+import { BookOpen, Folder, Users, Ticket } from 'lucide-react';
 
 const footerNavItems: NavItem[] = [
     {
@@ -28,6 +28,14 @@ export function AppSidebar() {
     const { auth } = page.props;
 
     const mainNavItems: NavItem[] = [];
+
+    if (auth.user) {
+        mainNavItems.push({
+            title: 'Moje rezervace',
+            href: '/my-reservations',
+            icon: Ticket,
+        });
+    }
 
     if (auth.user && auth.user.role === 'admin') {
         mainNavItems.push({

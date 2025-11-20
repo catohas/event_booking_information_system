@@ -74,9 +74,13 @@ export interface Reservation {
     id?: number;
     seat_row: number;
     seat_col: number;
+    status?: 'pending' | 'confirmed' | 'cancelled';
+    session_id?: string | null;
     paid_date?: string | null;
     created_at?: string | null;
     updated_at?: string | null;
+    user?: User;
+    event?: Event;
 }
 
 export interface Event {

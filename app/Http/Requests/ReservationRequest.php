@@ -10,15 +10,23 @@ class ReservationRequest extends FormRequest
     {
         return [
             'event_id' => ['required', 'integer', 'exists:events,id'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-            'seat_row' => ['required', 'integer', 'min:0', 'max:65535'],
-            'seat_col' => ['required', 'integer', 'min:0', 'max:65535'],
-            'paid_date' => ['nullable', 'date'],
+            'seats' => ['required', 'array', 'min:1', 'max:5'],
+            'seats.*.seat_row' => ['required', 'integer', 'min:1', 'max:65535'],
+            'seats.*.seat_col' => ['required', 'integer', 'min:1', 'max:65535'],
         ];
     }
 
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'seats.required' => 'Musíte vybrat alespoň jedno sedadlo.',
+            'seats.min' => 'Musíte vybrat alespoň jedno sedadlo.',
+            'seats.max' => 'Můžete vybrat maximálně 5 sedadel.',
+        ];
     }
 }

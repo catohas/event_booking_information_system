@@ -25,7 +25,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, Users, Home, Settings } from 'lucide-react';
+import { Menu, Users, Home, Settings, Wallet } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -57,6 +57,14 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
             title: 'Správa kina',
             href: '/management',
             icon: Settings,
+        });
+    }
+
+    if (auth.user.role === 'admin' || auth.user.role === 'cashier') {
+        mainNavItems.push({
+            title: 'Pokladna',
+            href: '/cashier',
+            icon: Wallet,
         });
     }
 

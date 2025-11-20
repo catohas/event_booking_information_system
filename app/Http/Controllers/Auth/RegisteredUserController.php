@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\ReservationService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class RegisteredUserController extends Controller
 {
     use AuthorizesRequests;
+
+    protected ReservationService $reservationService;
+
+    public function __construct(ReservationService $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
 
     /**
      * Show the registration page.
@@ -38,6 +46,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $sessionId = session()->getId();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -47,6 +57,13 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        // Claim any guest reservations from this session
+        $claimedCount = $this->reservationService->claimGuestReservations($sessionId, $user->id);
+
+        if ($claimedCount > 0) {
+            session()->flash('success', "Úspěšně zaregistrován! Vaše rezervace ($claimedCount) byly přiřazeny k účtu.");
+        }
 
         $request->session()->regenerate();
 

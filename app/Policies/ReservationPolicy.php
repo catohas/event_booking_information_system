@@ -32,7 +32,11 @@ class ReservationPolicy
 
     public function delete(User $user, Reservation $reservation): bool
     {
-        return $user->id === $reservation->user_id || $user->role === 'admin' || $user->role === 'cashier';
+        if ($user->role === 'admin' || $user->role === 'cashier') {
+            return true;
+        }
+
+        return $user->id === $reservation->user_id && $reservation->status === 'pending';
     }
 
     public function restore(User $user, Reservation $reservation): bool
