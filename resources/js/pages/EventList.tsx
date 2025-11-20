@@ -94,7 +94,7 @@ export default function EventList({ events }: EventListProps) {
                                 Cena lístku: <span className="text-foreground font-medium">{event.price} Kč</span>
                             </div>
                             <Button asChild className="shrink-0">
-                                <Link href={reservations.url(event.id)}>Rezervovat</Link>
+                                <Link href={reservations.url(event.id)}>Zobrazit rezervace</Link>
                             </Button>
                         </CardFooter>
                     </Card>
