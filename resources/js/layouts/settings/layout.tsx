@@ -21,11 +21,13 @@ const sidebarNavItems: NavItem[] = [
         href: editPassword(),
         icon: null,
     },
+    /*
     {
         title: 'Dvoufaktorová autentizace',
         href: show(),
         icon: null,
     },
+     */
     {
         title: 'Vzhled',
         href: editAppearance(),
