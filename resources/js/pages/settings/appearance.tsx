@@ -24,7 +24,7 @@ export default function Appearance() {
                 <div className="space-y-6">
                     <HeadingSmall
                         title="Nastavení vzhledu"
-                        description="Aktualizujte nastavení vzhledu vašeho účtu"
+                        description="Aktualizujte nastavení vzhledu"
                     />
                     <AppearanceTabs />
                 </div>
