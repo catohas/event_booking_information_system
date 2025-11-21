@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
-import { Edit2, Trash2, Plus, Upload } from 'lucide-react';
+import { Edit2, Trash2, Plus } from 'lucide-react';
 import React, { useState, FormEvent, useRef } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -276,7 +276,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                             {/* Halls Tab */}
                             <TabsContent value="halls" className="space-y-4">
                                 <div className="flex justify-end">
-                                    <Button onClick={handleAddHall} className="cursor-pointer">
+                                    <Button onClick={handleAddHall}>
                                         <Plus className="mr-2 h-4 w-4" />
                                         Přidat sál
                                     </Button>
@@ -302,7 +302,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => handleEditHall(hall)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Edit2 className="h-4 w-4" />
                                                         </Button>
@@ -310,7 +309,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => setDeletingHall(hall)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
@@ -325,7 +323,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                             {/* Showings Tab */}
                             <TabsContent value="showings" className="space-y-4">
                                 <div className="flex justify-end">
-                                    <Button onClick={handleAddShowing} className="cursor-pointer">
+                                    <Button onClick={handleAddShowing}>
                                         <Plus className="mr-2 h-4 w-4" />
                                         Přidat představení
                                     </Button>
@@ -363,7 +361,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => handleEditShowing(showing)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Edit2 className="h-4 w-4" />
                                                         </Button>
@@ -371,7 +368,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => setDeletingShowing(showing)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
@@ -386,7 +382,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                             {/* Events Tab */}
                             <TabsContent value="events" className="space-y-4">
                                 <div className="flex justify-end">
-                                    <Button onClick={handleAddEvent} className="cursor-pointer">
+                                    <Button onClick={handleAddEvent}>
                                         <Plus className="mr-2 h-4 w-4" />
                                         Přidat událost
                                     </Button>
@@ -416,7 +412,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => handleEditEvent(event)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Edit2 className="h-4 w-4" />
                                                         </Button>
@@ -424,7 +419,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                                             variant="ghost"
                                                             size="icon"
                                                             onClick={() => setDeletingEvent(event)}
-                                                            className="cursor-pointer"
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
