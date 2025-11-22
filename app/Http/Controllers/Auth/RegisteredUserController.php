@@ -96,7 +96,9 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
         ]);
 
-        if (($request->user->id === $user->id) && $request->role != 'admin') {
+        // redirect only if the authenticated user just changed their own role
+        // to something other than 'admin'
+        if (($request->user()->id === $user->id) && $request->role != 'admin') {
             return redirect('/');
         }
 
