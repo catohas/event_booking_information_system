@@ -17,10 +17,10 @@ use \App\Http\Controllers\Auth\RegisteredUserController;
 Route::get('/events/{event}/reservations', [ReservationController::class, 'eventReservations'])
     ->name('events.reservations');
 
-Route::post('/reservations', [ReservationController::class, 'store'])
-    ->name('reservations.store');
-
 Route::middleware(['auth'])->group(function () {
+
+    Route::post('/reservations', [ReservationController::class, 'store'])
+        ->name('reservations.store');
 
     Route::get('/my-reservations', [ReservationController::class, 'myReservations'])
         ->name('my-reservations');

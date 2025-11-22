@@ -78,13 +78,13 @@ class ReservationService
             // Check seat conflicts with row-level locking
             $conflicts = $this->validateSeatsAvailable($eventId, $seats);
             if (!empty($conflicts)) {
-                throw new \Exception('Some seats are already reserved: ' . json_encode($conflicts));
+                throw new \Exception('Některá sedadla už jsou zarezervovaná: ' . json_encode($conflicts));
             }
 
             // Check reservation limit
             $currentCount = $this->countUserReservations($eventId, $userId, $sessionId);
             if ($currentCount + count($seats) > self::MAX_RESERVATIONS_PER_EVENT) {
-                throw new \Exception('Maximum ' . self::MAX_RESERVATIONS_PER_EVENT . ' reservations per event allowed');
+                throw new \Exception('Je povoleno nejvýše ' . self::MAX_RESERVATIONS_PER_EVENT . ' rezervací na jednu událost');
             }
 
             // Create reservations

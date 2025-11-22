@@ -52,7 +52,7 @@ export default function EventList({ events }: EventListProps) {
                                         {event.showing.type}
                                     </Badge>
                                 )}
-                                <Badge variant="outline" className="backdrop-blur-sm">
+                                <Badge variant="secondary" className="backdrop-blur-sm">
                                     <Calendar className="mr-1 h-3.5 w-3.5" /> {formatDate(event.starts_at)}
                                 </Badge>
                             </div>

@@ -25,7 +25,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, Users, Home, Settings, Wallet } from 'lucide-react';
+import { Menu, Users, Home, Settings, Wallet, Ticket } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -49,6 +49,11 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
             title: 'Domů',
             href: '/',
             icon: Home,
+        },
+        {
+            title: 'Moje rezervace',
+            href: '/my-reservations',
+            icon: Ticket,
         },
     ];
 

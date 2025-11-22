@@ -79,6 +79,7 @@ export interface Reservation {
     paid_date?: string | null;
     created_at?: string | null;
     updated_at?: string | null;
+    user_id?: number | null;
     user?: User;
     event?: Event;
 }

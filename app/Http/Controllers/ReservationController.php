@@ -34,32 +34,34 @@ class ReservationController extends Controller
 
     public function store(ReservationRequest $request)
     {
+        // Ensure only authenticated users can create reservations
+        if (!Auth::check()) {
+            abort(401);
+        }
+
         try {
             $eventId = $request->validated()['event_id'];
             $seats = $request->validated()['seats'];
             $userId = Auth::id();
-            $sessionId = !$userId ? session()->getId() : null;
 
             // Create reservations
             $reservations = $this->reservationService->createReservations(
                 $eventId,
                 $seats,
                 $userId,
-                $sessionId
+                null
             );
 
             return response()->json([
                 'success' => true,
-                'message' => $userId
-                    ? 'Rezervace byla úspěšně vytvořena.'
-                    : 'Rezervace byla vytvořena. Pro dokončení se prosím zaregistrujte.',
+                'message' => 'Rezervace byla úspěšně vytvořena.',
                 'reservations' => ReservationResource::collection($reservations),
-                'requires_registration' => !$userId,
+                'requires_registration' => false,
             ]);
 
         } catch (\Exception $e) {
-            // Check if it's a seat conflict error
-            if (str_contains($e->getMessage(), 'already reserved')) {
+
+            if (str_contains($e->getMessage(), 'už jsou zarezervovaná')) {
                 return response()->json([
                     'success' => false,
                     'error' => 'seat_conflict',
@@ -67,7 +69,7 @@ class ReservationController extends Controller
                 ], 409);
             }
 
-            if (str_contains($e->getMessage(), 'Maximum')) {
+            if (str_contains($e->getMessage(), 'Je povoleno nejvýše')) {
                 return response()->json([
                     'success' => false,
                     'error' => 'reservation_limit',
