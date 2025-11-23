@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->callWith(CuratedEventSeeder::class);
+        $this->callWith(EventSeeder::class);
         $this->call(ReservationSeeder::class);
     }
 }

@@ -96,6 +96,5 @@ class ReservationSeeder extends Seeder
             ]);
         }
 
-        $this->command->info('Reservations seeded successfully!');
     }
 }

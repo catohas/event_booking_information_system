@@ -8,7 +8,7 @@ use App\Models\Showing;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
-class CuratedEventSeeder extends Seeder
+class EventSeeder extends Seeder
 {
     public function run(): void
     {
