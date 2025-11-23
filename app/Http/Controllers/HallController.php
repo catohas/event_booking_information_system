@@ -40,6 +40,11 @@ class HallController extends Controller
 
         try {
             $hall->updateOrFail($request->validated());
+
+            // After updating dimensions, remove reservations outside the new bounds
+            $hall->load('event.reservations');
+            $hall->deleteOutOfBoundsReservations();
+
             return back()->with('success', 'Sál úspěšně upraven.');
         }
         catch (\Throwable $e) {

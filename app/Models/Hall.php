@@ -20,4 +20,30 @@ class Hall extends Model
     {
         return $this->hasMany(Event::class);
     }
+
+    /**
+     * Delete reservations that are now outside this hall's dimensions.
+     */
+    public function deleteOutOfBoundsReservations(): void
+    {
+        $rowMax = $this->row_amt;
+        $colMax = $this->col_amt;
+
+        if ($rowMax === null || $colMax === null) {
+            return;
+        }
+
+        // Iterate through all events in this hall and clean their reservations
+        foreach ($this->event as $event) {
+            $event->reservations()
+                ->where(function ($query) use ($rowMax, $colMax) {
+                    $query
+                        ->where('seat_row', '<', 1)
+                        ->orWhere('seat_col', '<', 1)
+                        ->orWhere('seat_row', '>', $rowMax)
+                        ->orWhere('seat_col', '>', $colMax);
+                })
+                ->delete();
+        }
+    }
 }
