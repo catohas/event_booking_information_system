@@ -134,7 +134,7 @@ class ReservationController extends Controller
 
     public function eventReservations(int $event)
     {
-        // attempt to find the event including relations; if it doesn't exist, redirect home with a toast
+        // attempt to find the event including relations, if it doesn't exist, redirect home
         $eventModel = Event::with(['hall', 'showing', 'reservations' => function ($query) {
             $query->active(); // only load active reservations
         }])->find($event);
