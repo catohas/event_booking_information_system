@@ -132,16 +132,19 @@ class ReservationController extends Controller
         return response()->json();
     }
 
-    public function eventReservations(Event $event)
+    public function eventReservations(int $event)
     {
-        //$this->authorize('viewEvent', [Reservation::class, $event]);
+        // attempt to find the event including relations; if it doesn't exist, redirect home with a toast
+        $eventModel = Event::with(['hall', 'showing', 'reservations' => function ($query) {
+            $query->active(); // only load active reservations
+        }])->find($event);
 
-        $event->load(['hall', 'showing', 'reservations' => function ($query) {
-            $query->active(); // Only load active reservations
-        }]);
+        if (!$eventModel) {
+            return redirect()->route('home')->with('info', 'Tato událost byla odstraněna.');
+        }
 
         return Inertia::render('reservations', [
-            'event' => new EventResource($event),
+            'event' => new EventResource($eventModel),
         ]);
     }
 
