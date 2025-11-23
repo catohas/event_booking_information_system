@@ -12,9 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        //User::factory(10)->create();
 
-        $user = User::firstOrCreate(
+        //$user = User::firstOrCreate(
+         User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
@@ -55,5 +56,6 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->callWith(CuratedEventSeeder::class);
+        $this->call(ReservationSeeder::class);
     }
 }

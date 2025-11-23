@@ -70,24 +70,18 @@ class ReservationService
     }
 
     /**
-     * Count active reservations for a user/session for a specific event
+     * Count active reservations for a user for a specific event
      *
      * @param int $eventId
-     * @param int|null $userId
-     * @param string|null $sessionId
+     * @param int $userId
      * @return int
      */
-    public function countUserReservations(int $eventId, ?int $userId = null, ?string $sessionId = null): int
+    public function countUserReservations(int $eventId, int $userId): int
     {
-        $query = Reservation::where('event_id', $eventId)->active();
-
-        if ($userId) {
-            $query->where('user_id', $userId);
-        } elseif ($sessionId) {
-            $query->where('session_id', $sessionId);
-        }
-
-        return $query->count();
+        return Reservation::where('event_id', $eventId)
+            ->where('user_id', $userId)
+            ->active()
+            ->count();
     }
 
     /**
@@ -95,14 +89,13 @@ class ReservationService
      *
      * @param int $eventId
      * @param array $seats Array of ['seat_row' => int, 'seat_col' => int]
-     * @param int|null $userId
-     * @param string|null $sessionId
+     * @param int $userId
      * @return Collection
      * @throws \Exception
      */
-    public function createReservations(int $eventId, array $seats, ?int $userId = null, ?string $sessionId = null): Collection
+    public function createReservations(int $eventId, array $seats, int $userId): Collection
     {
-        return DB::transaction(function () use ($eventId, $seats, $userId, $sessionId) {
+        return DB::transaction(function () use ($eventId, $seats, $userId) {
             // Validate event exists (with hall relation for bounds check)
             $event = Event::with('hall')->findOrFail($eventId);
 
@@ -119,7 +112,7 @@ class ReservationService
             }
 
             // Check reservation limit
-            $currentCount = $this->countUserReservations($eventId, $userId, $sessionId);
+            $currentCount = $this->countUserReservations($eventId, $userId);
             if ($currentCount + count($seats) > self::MAX_RESERVATIONS_PER_EVENT) {
                 throw new \Exception('Je povoleno nejvýše ' . self::MAX_RESERVATIONS_PER_EVENT . ' rezervací na jednu událost');
             }
@@ -130,7 +123,6 @@ class ReservationService
                 $reservation = Reservation::create([
                     'event_id' => $eventId,
                     'user_id' => $userId,
-                    'session_id' => $sessionId,
                     'seat_row' => $seat['seat_row'],
                     'seat_col' => $seat['seat_col'],
                     'status' => Reservation::STATUS_PENDING,
@@ -140,21 +132,6 @@ class ReservationService
 
             return $reservations;
         });
-    }
-
-    /**
-     * Claim guest reservations for a newly registered user
-     *
-     * @param string $sessionId
-     * @param int $userId
-     * @return int Number of reservations claimed
-     */
-    public function claimGuestReservations(string $sessionId, int $userId): int
-    {
-        return Reservation::where('session_id', $sessionId)
-            ->whereNull('user_id')
-            ->pending()
-            ->update(['user_id' => $userId, 'session_id' => null]);
     }
 
     /**

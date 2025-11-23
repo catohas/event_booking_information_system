@@ -19,7 +19,6 @@ class Reservation extends Model
     protected $fillable = [
         'event_id',
         'user_id',
-        'session_id',
         'seat_row',
         'seat_col',
         'paid_date',
@@ -60,11 +59,6 @@ class Reservation extends Model
     public function scopeForUser(Builder $query, int $userId): Builder
     {
         return $query->where('user_id', $userId);
-    }
-
-    public function scopeForSession(Builder $query, string $sessionId): Builder
-    {
-        return $query->where('session_id', $sessionId);
     }
 
     protected function casts(): array

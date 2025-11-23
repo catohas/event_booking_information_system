@@ -19,7 +19,6 @@ class ReservationResource extends JsonResource
             'id' => $this->when($isAdminOrCashier || $isOwner, $this->id),
             //'event_id' => $this->event_id,
             'user_id' => $this->when($isAdminOrCashier || $isOwner, $this->user_id),
-            'session_id' => $this->when($isAdminOrCashier, $this->session_id),
             'seat_row' => $this->seat_row,
             'seat_col' => $this->seat_col,
             'status' => $this->when($isAdminOrCashier || $isOwner, $this->status),
@@ -28,7 +27,7 @@ class ReservationResource extends JsonResource
             'updated_at' => $this->when($isAdminOrCashier || $isOwner, $this->updated_at),
             'event' => $this->when($isAdminOrCashier || $isOwner, new EventResource($this->whenLoaded('event'))),
             'user' => $this->when($isAdminOrCashier, function () {
-                if ($this->relationLoaded('user')) {
+                if ($this->relationLoaded('user') && $this->user) {
                     return [
                         'id' => $this->user->id,
                         'name' => $this->user->name,

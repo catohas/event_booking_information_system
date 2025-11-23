@@ -75,7 +75,6 @@ export interface Reservation {
     seat_row: number;
     seat_col: number;
     status?: 'pending' | 'confirmed' | 'cancelled';
-    session_id?: string | null;
     paid_date?: string | null;
     created_at?: string | null;
     updated_at?: string | null;

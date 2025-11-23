@@ -48,8 +48,7 @@ class ReservationController extends Controller
             $reservations = $this->reservationService->createReservations(
                 $eventId,
                 $seats,
-                $userId,
-                null
+                $userId
             );
 
             return redirect()->back()->with('success', 'Rezervace byla úspěšně vytvořena.');

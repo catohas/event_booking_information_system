@@ -12,12 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            // Make user_id nullable for guest reservations
-            $table->foreignId('user_id')->nullable()->change();
-
-            // Add session_id for tracking guest reservations
-            $table->string('session_id')->nullable()->index();
-
             // Add status enum: pending, confirmed, cancelled
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 
@@ -33,9 +27,7 @@ return new class extends Migration
     {
         Schema::table('reservations', function (Blueprint $table) {
             $table->dropIndex(['event_id', 'status']);
-            $table->dropColumn(['session_id', 'status']);
-            $table->foreignId('user_id')->nullable(false)->change();
+            $table->dropColumn('status');
         });
     }
 };
-

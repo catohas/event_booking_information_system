@@ -51,8 +51,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $sessionId = session()->getId();
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -62,13 +60,6 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
-        // Claim any guest reservations from this session
-        $claimedCount = $this->reservationService->claimGuestReservations($sessionId, $user->id);
-
-        if ($claimedCount > 0) {
-            session()->flash('success', "Úspěšně zaregistrován! Vaše rezervace ($claimedCount) byly přiřazeny k účtu.");
-        }
 
         $request->session()->regenerate();
 
