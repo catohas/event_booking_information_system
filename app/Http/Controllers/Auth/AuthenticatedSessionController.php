@@ -19,6 +19,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(Request $request): Response
     {
+        // if the event page sent an intended URL, store it for later redirect
+        if ($request->filled('intended')) {
+            $request->session()->put('url.intended', $request->input('intended'));
+        }
+
         return Inertia::render('auth/login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => $request->session()->get('status'),
