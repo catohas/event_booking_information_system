@@ -27,7 +27,7 @@ export default function EventList({ events }: EventListProps) {
                 return (
                     <Card
                         key={event.id}
-                        className="group overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md py-0 pb-6"
+                        className="group overflow-hidden transition-all duration-200 hover:shadow-md py-0 pb-6"
                     >
                         {/* Image / Poster */}
                         <div className="relative aspect-video w-full bg-muted/40">
