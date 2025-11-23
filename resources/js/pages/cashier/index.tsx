@@ -281,7 +281,7 @@ export default function CashierIndex({ reservations }: CashierIndexProps) {
                                                             Potvrdit
                                                         </Button>
                                                     )}
-                                                    {reservation.id && (
+                                                    {reservation.status !== 'cancelled' && reservation.id && (
                                                         <Button
                                                             variant="destructive"
                                                             size="sm"
