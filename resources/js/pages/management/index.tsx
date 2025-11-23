@@ -12,6 +12,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Edit2, Trash2, Plus } from 'lucide-react';
 import React, { useState, FormEvent, useRef } from 'react';
+import { useSort } from '@/hooks/use-sort';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -89,6 +90,46 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         hall_id: '',
         showing_id: '',
         price: '',
+    });
+
+    const {
+        sortedItems: sortedHalls,
+        sort: hallSort,
+        toggleSort: toggleHallSort,
+    } = useSort<Hall, 'name' | 'row_amt' | 'col_amt'>(halls, {
+        key: 'name',
+        direction: 'asc',
+    }, {
+        name: (a, b) => a.name.localeCompare(b.name),
+        row_amt: (a, b) => a.row_amt - b.row_amt,
+        col_amt: (a, b) => a.col_amt - b.col_amt,
+    });
+
+    const {
+        sortedItems: sortedShowings,
+        sort: showingSort,
+        toggleSort: toggleShowingSort,
+    } = useSort<Showing, 'name' | 'type' | 'length'>(showings, {
+        key: 'name',
+        direction: 'asc',
+    }, {
+        name: (a, b) => a.name.localeCompare(b.name),
+        type: (a, b) => a.type.localeCompare(b.type),
+        length: (a, b) => a.length.localeCompare(b.length),
+    });
+
+    const {
+        sortedItems: sortedEvents,
+        sort: eventSort,
+        toggleSort: toggleEventSort,
+    } = useSort<Event, 'starts_at' | 'price' | 'hall' | 'showing'>(events, {
+        key: 'starts_at',
+        direction: 'asc',
+    }, {
+        starts_at: (a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime(),
+        price: (a, b) => a.price - b.price,
+        hall: (a, b) => (a.hall?.name || '').localeCompare(b.hall?.name || ''),
+        showing: (a, b) => (a.showing?.name || '').localeCompare(b.showing?.name || ''),
     });
 
     // Hall handlers
@@ -284,14 +325,44 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Název</TableHead>
-                                            <TableHead>Počet řad</TableHead>
-                                            <TableHead>Počet sloupců</TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleHallSort('name')}
+                                            >
+                                                Název
+                                                {hallSort.key === 'name' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {hallSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleHallSort('row_amt')}
+                                            >
+                                                Počet řad
+                                                {hallSort.key === 'row_amt' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {hallSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleHallSort('col_amt')}
+                                            >
+                                                Počet sloupců
+                                                {hallSort.key === 'col_amt' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {hallSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
                                             <TableHead className="text-right">Akce</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {halls.map((hall) => (
+                                        {sortedHalls.map((hall) => (
                                             <TableRow key={hall.id}>
                                                 <TableCell>{hall.name}</TableCell>
                                                 <TableCell>{hall.row_amt}</TableCell>
@@ -331,15 +402,45 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Název</TableHead>
-                                            <TableHead>Typ</TableHead>
-                                            <TableHead>Délka</TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleShowingSort('name')}
+                                            >
+                                                Název
+                                                {showingSort.key === 'name' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {showingSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleShowingSort('type')}
+                                            >
+                                                Typ
+                                                {showingSort.key === 'type' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {showingSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleShowingSort('length')}
+                                            >
+                                                Délka
+                                                {showingSort.key === 'length' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {showingSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
                                             <TableHead>Obrázek</TableHead>
                                             <TableHead className="text-right">Akce</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {showings.map((showing) => (
+                                        {sortedShowings.map((showing) => (
                                             <TableRow key={showing.id}>
                                                 <TableCell>{showing.name}</TableCell>
                                                 <TableCell>{showing.type}</TableCell>
@@ -390,15 +491,55 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Představení</TableHead>
-                                            <TableHead>Sál</TableHead>
-                                            <TableHead>Začátek</TableHead>
-                                            <TableHead>Cena</TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleEventSort('showing')}
+                                            >
+                                                Představení
+                                                {eventSort.key === 'showing' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {eventSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleEventSort('hall')}
+                                            >
+                                                Sál
+                                                {eventSort.key === 'hall' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {eventSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleEventSort('starts_at')}
+                                            >
+                                                Začátek
+                                                {eventSort.key === 'starts_at' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {eventSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer select-none"
+                                                onClick={() => toggleEventSort('price')}
+                                            >
+                                                Cena
+                                                {eventSort.key === 'price' && (
+                                                    <span className="ml-1 text-xs">
+                                                        {eventSort.direction === 'asc' ? '▲' : '▼'}
+                                                    </span>
+                                                )}
+                                            </TableHead>
                                             <TableHead className="text-right">Akce</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {events.map((event) => (
+                                        {sortedEvents.map((event) => (
                                             <TableRow key={event.id}>
                                                 <TableCell>{event.showing?.name}</TableCell>
                                                 <TableCell>{event.hall?.name}</TableCell>

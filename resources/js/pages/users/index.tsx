@@ -36,6 +36,7 @@ import { type BreadcrumbItem, type User } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Edit2, Trash2 } from 'lucide-react';
 import { useState, FormEvent } from 'react';
+import { useSort } from '@/hooks/use-sort';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -56,6 +57,36 @@ export default function UsersIndex({ users }: UsersIndexProps) {
         name: '',
         role: 'viewer' as User['role'],
     });
+
+    const { sortedItems: sortedUsers, sort, toggleSort } = useSort<User, 'id' | 'name' | 'email' | 'role' | 'created_at'>(
+        users,
+        { key: 'created_at', direction: 'asc' },
+        {
+            id: (a, b) => a.id - b.id,
+            name: (a, b) => a.name.localeCompare(b.name),
+            email: (a, b) => a.email.localeCompare(b.email),
+            role: (a, b) => a.role.localeCompare(b.role),
+            created_at: (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+        },
+    );
+
+    const translateRole = (role: string) => {
+       switch (role) {
+           case 'admin': {
+               return 'Administrátor';
+           }
+           case 'redactor': {
+               return 'Redaktor';
+           }
+           case 'cashier': {
+               return 'Pokladní';
+           }
+           case 'viewer': {
+               return 'Divák';
+           }
+       }
+       return "Neznamá role";
+    }
 
     const handleEdit = (user: User) => {
         setEditingUser(user);
@@ -103,18 +134,68 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>ID</TableHead>
-                                    <TableHead>Jméno</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Čas vytvoření</TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('id')}
+                                    >
+                                        ID
+                                        {sort.key === 'id' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('name')}
+                                    >
+                                        Jméno
+                                        {sort.key === 'name' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('email')}
+                                    >
+                                        Email
+                                        {sort.key === 'email' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('role')}
+                                    >
+                                        Role
+                                        {sort.key === 'role' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('created_at')}
+                                    >
+                                        Čas registrace
+                                        {sort.key === 'created_at' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
                                     <TableHead className="text-right">
                                         Akce
                                     </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {users.map((user) => (
+                                {sortedUsers.map((user) => (
                                     <TableRow key={user.id}>
                                         <TableCell>{user.id}</TableCell>
                                         <TableCell className="font-medium">
@@ -123,7 +204,7 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize">
-                                                {user.role}
+                                                {translateRole(user.role)}
                                             </span>
                                         </TableCell>
                                         <TableCell>

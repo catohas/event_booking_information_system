@@ -8,6 +8,7 @@ import { type BreadcrumbItem, type Reservation } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
 import React, { useState } from 'react';
+import { useSort } from '@/hooks/use-sort';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +24,39 @@ interface CashierIndexProps {
 export default function CashierIndex({ reservations }: CashierIndexProps) {
     const [confirmingReservation, setConfirmingReservation] = useState<Reservation | null>(null);
     const [cancelingReservation, setCancelingReservation] = useState<Reservation | null>(null);
+
+    const { sortedItems: sortedReservations, sort, toggleSort } = useSort<Reservation, 'id' | 'customer' | 'event' | 'event_date' | 'hall' | 'seat' | 'price' | 'created_at' | 'status'>(
+        reservations.data,
+        { key: 'created_at', direction: 'desc' },
+        {
+            id: (a, b) => (a.id ?? 0) - (b.id ?? 0),
+            customer: (a, b) => (a.user?.name || '').localeCompare(b.user?.name || ''),
+            event: (a, b) => (a.event?.showing?.name || '').localeCompare(b.event?.showing?.name || ''),
+            event_date: (a, b) => {
+                const da = a.event?.starts_at ? new Date(a.event.starts_at).getTime() : 0;
+                const db = b.event?.starts_at ? new Date(b.event.starts_at).getTime() : 0;
+                return da - db;
+            },
+            hall: (a, b) => (a.event?.hall?.name || '').localeCompare(b.event?.hall?.name || ''),
+            seat: (a, b) => {
+                if (a.seat_row === b.seat_row) {
+                    return a.seat_col - b.seat_col;
+                }
+                return a.seat_row - b.seat_row;
+            },
+            price: (a, b) => {
+                const pa = a.event?.price ?? 0;
+                const pb = b.event?.price ?? 0;
+                return pa - pb;
+            },
+            created_at: (a, b) => {
+                const da = a.created_at ? new Date(a.created_at).getTime() : 0;
+                const db = b.created_at ? new Date(b.created_at).getTime() : 0;
+                return da - db;
+            },
+            status: (a, b) => (a.status || '').localeCompare(b.status || ''),
+        },
+    );
 
     const handleConfirm = () => {
         if (!confirmingReservation?.id) return;
@@ -70,27 +104,117 @@ export default function CashierIndex({ reservations }: CashierIndexProps) {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>ID</TableHead>
-                                    <TableHead>Zákazník</TableHead>
-                                    <TableHead>Událost</TableHead>
-                                    <TableHead>Datum představení</TableHead>
-                                    <TableHead>Sál</TableHead>
-                                    <TableHead>Sedadlo</TableHead>
-                                    <TableHead>Cena</TableHead>
-                                    <TableHead>Vytvořeno</TableHead>
-                                    <TableHead>Stav</TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('id')}
+                                    >
+                                        ID
+                                        {sort.key === 'id' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('customer')}
+                                    >
+                                        Zákazník
+                                        {sort.key === 'customer' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('event')}
+                                    >
+                                        Událost
+                                        {sort.key === 'event' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('event_date')}
+                                    >
+                                        Datum představení
+                                        {sort.key === 'event_date' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('hall')}
+                                    >
+                                        Sál
+                                        {sort.key === 'hall' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('seat')}
+                                    >
+                                        Sedadlo
+                                        {sort.key === 'seat' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('price')}
+                                    >
+                                        Cena
+                                        {sort.key === 'price' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('created_at')}
+                                    >
+                                        Vytvořeno
+                                        {sort.key === 'created_at' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
+                                    <TableHead
+                                        className="cursor-pointer select-none"
+                                        onClick={() => toggleSort('status')}
+                                    >
+                                        Stav
+                                        {sort.key === 'status' && (
+                                            <span className="ml-1 text-xs">
+                                                {sort.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </TableHead>
                                     <TableHead className="text-right">Akce</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {reservations.data.length === 0 ? (
+                                {sortedReservations.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={10} className="text-center text-muted-foreground">
                                             Žádné rezervace
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    reservations.data.map((reservation) => (
+                                    sortedReservations.map((reservation) => (
                                         <TableRow key={reservation.id}>
                                             <TableCell className="font-medium">
                                                 {reservation.id}
