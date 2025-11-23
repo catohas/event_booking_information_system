@@ -13,6 +13,37 @@ class ReservationService
     const MAX_RESERVATIONS_PER_EVENT = 5;
 
     /**
+     * Validate that seats are within hall bounds.
+     *
+     * @param \App\Models\Event $event
+     * @param array $seats Array of ['seat_row' => int, 'seat_col' => int]
+     * @return array Array of invalid seats
+     */
+    public function validateSeatsWithinHall(Event $event, array $seats): array
+    {
+        $invalid = [];
+
+        $rowMax = $event->hall->row_amt ?? null;
+        $colMax = $event->hall->col_amt ?? null;
+
+        // If hall dimensions are not defined, skip validation
+        if ($rowMax === null || $colMax === null) {
+            return $invalid;
+        }
+
+        foreach ($seats as $seat) {
+            $row = $seat['seat_row'] ?? null;
+            $col = $seat['seat_col'] ?? null;
+
+            if (!is_int($row) || !is_int($col) || $row < 1 || $col < 1 || $row > $rowMax || $col > $colMax) {
+                $invalid[] = $seat;
+            }
+        }
+
+        return $invalid;
+    }
+
+    /**
      * Validate that seats are available (not already reserved)
      *
      * @param int $eventId
@@ -72,8 +103,14 @@ class ReservationService
     public function createReservations(int $eventId, array $seats, ?int $userId = null, ?string $sessionId = null): Collection
     {
         return DB::transaction(function () use ($eventId, $seats, $userId, $sessionId) {
-            // Validate event exists
-            $event = Event::findOrFail($eventId);
+            // Validate event exists (with hall relation for bounds check)
+            $event = Event::with('hall')->findOrFail($eventId);
+
+            // Validate seats are within hall bounds
+            $invalidSeats = $this->validateSeatsWithinHall($event, $seats);
+            if (!empty($invalidSeats)) {
+                throw new \Exception('Některá sedadla jsou mimo rozsah sálu: ' . json_encode($invalidSeats));
+            }
 
             // Check seat conflicts with row-level locking
             $conflicts = $this->validateSeatsAvailable($eventId, $seats);

@@ -56,6 +56,10 @@ class ReservationController extends Controller
 
         } catch (\Exception $e) {
 
+            if (str_contains($e->getMessage(), 'jsou mimo rozsah')) {
+                return redirect()->back()->with('error', 'Některá vybraná sedadla jsou mimo rozsah sálu.');
+            }
+
             if (str_contains($e->getMessage(), 'už jsou zarezervovaná')) {
                 return redirect()->back()->with('error', 'Některá vybraná sedadla byla již rezervována. Obnovte stránku a vyberte jiná sedadla.');
             }
