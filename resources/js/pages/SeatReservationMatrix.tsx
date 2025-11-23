@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Reservation, SelectedSeat } from '@/types';
 
 interface ReservedSeatsProps {
@@ -11,11 +11,17 @@ interface ReservedSeatsProps {
 
 export default function SeatReservationMatrix({ row_amt, col_amt, reservations, onReserve, currentUserId }: ReservedSeatsProps) {
 
-    useEffect(() => {
-        console.dir(reservations);
-    }, []);
-
     const [selectedSeats, setSelectedSeats] = useState<SelectedSeat[]>([]);
+    const prevReservationsCount = useRef(reservations.length);
+
+    // reset selected seats when reservations increase (after successful reservation)
+    useEffect(() => {
+        if (reservations.length > prevReservationsCount.current) {
+            // new reservations were added, clear selection
+            setSelectedSeats([]);
+        }
+        prevReservationsCount.current = reservations.length;
+    }, [reservations]);
 
     const isSeatReserved = (row: number, col: number) => {
         return reservations.some(
@@ -65,7 +71,9 @@ export default function SeatReservationMatrix({ row_amt, col_amt, reservations, 
 
     const handleReserve = () => {
         if (selectedSeats.length > 0 && onReserve) {
-            onReserve(selectedSeats);
+            const seatsToReserve = [...selectedSeats]; // copy the array
+            setSelectedSeats([]); // clear selection immediately
+            onReserve(seatsToReserve);
         }
     };
 

@@ -5,7 +5,6 @@ import SeatReservationMatrix from '@/pages/SeatReservationMatrix';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
-import { AlertCircle } from 'lucide-react';
 
 export default function Reservations() {
     const { props } = usePage<{ event: { data: Event }, auth?: { user?: { id: number } } }>();
@@ -13,8 +12,6 @@ export default function Reservations() {
     const isAuthenticated = !!props.auth?.user;
     const currentUserId = props.auth?.user?.id;
 
-    const [showConflictDialog, setShowConflictDialog] = useState(false);
-    const [conflictMessage, setConflictMessage] = useState('');
     const [showAuthRequiredDialog, setShowAuthRequiredDialog] = useState(false);
 
     const handleReserve = (seats: SelectedSeat[]) => {
@@ -30,17 +27,11 @@ export default function Reservations() {
     const submitReservation = (seats: SelectedSeat[]) => {
         router.post('/reservations', {
             event_id: event.id,
-            seats: seats,
+            seats: seats as any,
         }, {
             preserveScroll: true,
             onSuccess: () => {
                 router.reload();
-            },
-            onError: (errors: { message?: string }) => {
-                if (errors.message) {
-                    setConflictMessage(errors.message);
-                    setShowConflictDialog(true);
-                }
             },
         });
     };
@@ -97,28 +88,6 @@ export default function Reservations() {
                 />
             </div>
 
-            {/* Conflict Dialog */}
-            <Dialog open={showConflictDialog} onOpenChange={setShowConflictDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <AlertCircle className="h-5 w-5 text-destructive" />
-                            Sedadla již rezervována
-                        </DialogTitle>
-                        <DialogDescription>
-                            {conflictMessage}
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <Button onClick={() => {
-                            setShowConflictDialog(false);
-                            router.reload(); // Reload to get fresh seat data
-                        }}>
-                            Obnovit a vybrat jiná sedadla
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
 
             {/* Auth Required Dialog for guests */}
             <Dialog open={showAuthRequiredDialog} onOpenChange={setShowAuthRequiredDialog}>

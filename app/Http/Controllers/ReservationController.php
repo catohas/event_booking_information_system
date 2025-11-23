@@ -52,36 +52,19 @@ class ReservationController extends Controller
                 null
             );
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Rezervace byla úspěšně vytvořena.',
-                'reservations' => ReservationResource::collection($reservations),
-                'requires_registration' => false,
-            ]);
+            return redirect()->back()->with('success', 'Rezervace byla úspěšně vytvořena.');
 
         } catch (\Exception $e) {
 
             if (str_contains($e->getMessage(), 'už jsou zarezervovaná')) {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'seat_conflict',
-                    'message' => 'Některá vybraná sedadla byla již rezervována. Obnovte stránku a vyberte jiná sedadla.',
-                ], 409);
+                return redirect()->back()->with('error', 'Některá vybraná sedadla byla již rezervována. Obnovte stránku a vyberte jiná sedadla.');
             }
 
             if (str_contains($e->getMessage(), 'Je povoleno nejvýše')) {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'reservation_limit',
-                    'message' => $e->getMessage(),
-                ], 422);
+                return redirect()->back()->with('error', $e->getMessage());
             }
 
-            return response()->json([
-                'success' => false,
-                'error' => 'unknown',
-                'message' => 'Nastala chyba při vytváření rezervace.',
-            ], 500);
+            return redirect()->back()->with('error', 'Nastala chyba při vytváření rezervace.');
         }
     }
 
