@@ -9,11 +9,8 @@ use App\Models\Event;
 use App\Models\Hall;
 use App\Models\Showing;
 
-class EventSeeder extends Seeder
+class RandomEventSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run($user = null): void
     {
         $halls = Hall::factory(5)->create();

@@ -1,2 +1,13 @@
+# Ignore everything in storage/app/public by default
 *
+# Keep this .gitignore
 !.gitignore
+
+# Allow the posters directory and image files inside it
+!posters/
+posters/*
+!posters/*.png
+!posters/*.jpg
+!posters/*.jpeg
+!posters/*.webp
+!posters/*.gif

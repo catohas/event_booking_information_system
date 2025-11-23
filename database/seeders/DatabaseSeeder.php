@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         $user = User::firstOrCreate(
             ['email' => 'test@example.com'],
@@ -54,6 +54,6 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->callWith(EventSeeder::class, ['user' => $user]);
+        $this->callWith(CuratedEventSeeder::class);
     }
 }
