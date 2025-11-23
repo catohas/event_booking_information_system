@@ -57,7 +57,7 @@ export default function Welcome() {
                             </h1>
 
                             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                                Vyberte si z naší nabídky představení a rezervujte si místa
+                                Vyberte si z naší nabídky událostí a rezervujte si sedadla
                             </p>
                         </div>
                     </div>
