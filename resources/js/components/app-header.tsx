@@ -44,6 +44,16 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
         return "";
     }
 
+    const getRoleLabel = (role: string) => {
+        const roleLabels: Record<string, string> = {
+            admin: 'Administrátor',
+            redactor: 'Redaktor',
+            cashier: 'Pokladní',
+            viewer: 'Uživatel',
+        };
+        return roleLabels[role] || role;
+    };
+
     const mainNavItems: NavItem[] = [
         {
             title: 'Domů',
@@ -180,7 +190,12 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </div>
 
                     <div className="ml-auto flex items-center space-x-2">
-                        <p>{auth.user.name}</p>
+                        <div className="flex flex-col items-end">
+                            <p>{auth.user.name}</p>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                                {getRoleLabel(auth.user.role)}
+                            </p>
+                        </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button

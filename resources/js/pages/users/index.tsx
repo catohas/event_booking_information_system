@@ -182,7 +182,7 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                                         className="cursor-pointer select-none"
                                         onClick={() => toggleSort('created_at')}
                                     >
-                                        Čas registrace
+                                        Datum registrace
                                         {sort.key === 'created_at' && (
                                             <span className="ml-1 text-xs">
                                                 {sort.direction === 'asc' ? '▲' : '▼'}
