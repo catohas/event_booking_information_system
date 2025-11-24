@@ -13,7 +13,7 @@
 <!-- Zkontrolujte prosím nastavení kódování v hlavièce dokumentu
      podle pou¾itého editoru -->
 
-<h1>Zadání - Kino</h1> <!-- Nahradte názvem svého zadání -->
+<h1>Kino</h1> <!-- Nahradte názvem svého zadání -->
 
 <dl>
     <dt>Autoøi</dt>
@@ -23,14 +23,13 @@
     </dd>
     <dd>Petr Hron <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
         <a href="mailto:xhronpe00@stud.fit.vutbr.cz">xhronpe00@stud.fit.vutbr.cz</a> -
-        PHP backend rezervací/pokladní, logika práv u¾ivatelù na backendu, frontend
+        PHP backend rezervací/pokladní, kontrola práv u¾ivatelù na backendu, frontend
     </dd>
     <dt>URL aplikace</dt>
-    <dd><a href="http://172.104.236.51">http://172.104.236.51</a></dd>
+    <dd><a target="_blank" href="http://172.104.236.51">http://172.104.236.51</a></dd>
 </dl>
 
 <h2>U¾ivatelé systému pro testování</h2>
-<p>Uveïte prosím existující zástupce <strong>v¹ech rolí u¾ivatelù</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>admin@iisprojekt.com</td><td>iis_admin</td><td>Administrátor</td></tr>
@@ -41,6 +40,8 @@
 
 <h3>Video</h3>
 
+<a target="_blank" href="https://drive.google.com/file/d/1MTioSh8NhKhkNAZg0cZj1todY9-tqX9p/view?usp=sharing">https://drive.google.com/file/d/1MTioSh8NhKhkNAZg0cZj1todY9-tqX9p/view?usp=sharing</a>
+
 <p>Pøilo¾te odkaz na komentované video demostrující pou¾ití informaèního
  systému. Zamìøte se na pøípady u¾ití definované zadáním (napø.
 registrace u¾ivatele, správa u¾ivatelù a èinnosti jednotlivých rolí).
@@ -50,10 +51,12 @@ spustit z odkazu.</p>
 <h2>Implementace</h2>
 <p>Implementace systému je postavena na frameworku Laravel v jazyce PHP a vyu¾ívá architekturu MVC. Databázová vrstva pou¾ívá relaèní databázi MySQL, která je spravována pomocí migraèních skriptù a modelù Eloquent, co¾ je ORM které Laravel vyu¾ívá.</p>
 
-<p>Autentizace a správa relací jsou øe¹eny vestavìnými mechanismy Laravelu (knihovna Fortify) a role u¾ivatelù (administrátor, redaktor, pokladní, divák) jsou kontrolovány pomocí autorizaèní logiky v <code>app/Policies</code>. Kontrolery v <code>app/Http/Controllers</code> zaji¹»ují hlavní logiku pro správu u¾ivatelù, událostí, projekcí, sálù a rezervací a vyu¾ívají slu¾bu <code>ReservationService</code> v <code>app/Services</code> pro slo¾itìj¹í operace s rezervacemi. Validace vstupù probíhá pomocí tøíd <code>FormRequest</code> v <code>app/Http/Requests</code> a u¾ivatelské rozhraní je tvoøeno frontendem v <code>resources/js</code>.</p>
+<p>Autentizace a správa relací jsou øe¹eny vestavìnými mechanismy Laravelu (knihovna Fortify) a role u¾ivatelù (administrátor, redaktor, pokladní, divák) jsou kontrolovány pomocí autorizaèní logiky v <code>app/Policies</code>. Kontrolery v <code>app/Http/Controllers</code> zaji¹»ují hlavní logiku pro správu u¾ivatelù, událostí, projekcí, sálù a rezervací a vyu¾ívají slu¾bu <code>ReservationService</code> v <code>app/Services</code> pro slo¾itìj¹í operace s rezervacemi. Validace vstupù probíhá pomocí tøíd <code>FormRequest</code> v <code>app/Http/Requests</code> a u¾ivatelské rozhraní je tvoøeno frontendem v <code>resources/js</code> vyu¾ívající knihovny React, Typescript a Tailwind.</p>
+
+<p>Spu¹tìní aplikace probíhá pomocí nástroje Laravel Sail který spustí aplikaci a databázi jako dva samostatné docker containery.</p>
 
 
-<h3>ER Diagram databáze</h3>
+<h3>Databáze</h3>
 
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAvUAAAP8CAYAAADGOkHxAAE6/HRFWHRteGZpbGUAJTNDbXhmaWxl
 JTIwaG9zdCUzRCUyMmFwcC5kaWFncmFtcy5uZXQlMjIlMjBhZ2VudCUzRCUyMk1vemlsbGElMkY1
@@ -2772,15 +2775,17 @@ VtxdbymEEKH4P/wlu3kXY93NAAAAAElFTkSuQmCC
 
 Softwarove prerekvizity:
 <ul>
-    <li>PHP</li>
-    <li>Composer</li>
-    <li>Docker</li>
+    <li>PHP (vyvíjeno s verzí 8.4.13)</li>
+    <li>Composer (2.8.3)</li>
+    <li>Docker (28.5.1)</li>
 </ul>
+<p>Mírné odli¹nosti ve verzích by nemìly dìlat ¾ádný problém</p>
 
-Postup instalace:
+<p>Postup instalace:</p>
 <ul>
+    <li><i>Vyu¾íváme balíèek Laravel Sail který spustí aplikaci a databází jako dva rùzné docker containery</i></li>
     <li>Po rozbalení projektu do slo¾ky spus»tì pøíkaz:</li>
-    <code>composer setup</code>
+    <code>composer setup</code> (instalace knihoven a úvodní setup)
     <li>Následnì v souboru .env nahraïte databázi z sqlite na mysql:</li>
     <code>
         DB_CONNECTION=mysql <br/>
@@ -2796,5 +2801,7 @@ Postup instalace:
     <code>./vendor/bin/sail artisan storage:link</code> (umo¾nìní ukládání obrázkù) <br/>
 </ul>
 
+<h2>Známe problémy</h2>
+<p>UX není v¾dy ideální ale funkcionalita by mìla být kompletní.</p>
 
 </body></html>
