@@ -17,7 +17,6 @@ class ReservationResource extends JsonResource
 
         return [
             'id' => $this->when($isAdminOrCashier || $isOwner, $this->id),
-            //'event_id' => $this->event_id,
             'user_id' => $this->when($isAdminOrCashier || $isOwner, $this->user_id),
             'seat_row' => $this->seat_row,
             'seat_col' => $this->seat_col,

@@ -15,12 +15,10 @@ class ReservationSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get users
         $testUser = User::where('email', 'test@example.com')->first();
         $cashier = User::where('email', 'cashier@c.com')->first();
         $redactor = User::where('email', 'redactor@r.com')->first();
 
-        // Get events
         $events = Event::with('hall')->take(5)->get();
 
         if ($events->isEmpty()) {
@@ -35,13 +33,13 @@ class ReservationSeeder extends Seeder
             return;
         }
 
-        // Create confirmed reservations with paid dates
+        // create confirmed reservations with paid dates
         foreach ($events->take(3) as $index => $event) {
             $user = $users->get($index % $users->count());
             $hallRows = $event->hall->row_amt;
             $hallCols = $event->hall->col_amt;
 
-            // Create 2-3 confirmed reservations per event
+            // create 2-3 confirmed reservations per event
             for ($i = 0; $i < rand(2, 3); $i++) {
                 Reservation::create([
                     'event_id' => $event->id,
@@ -56,13 +54,13 @@ class ReservationSeeder extends Seeder
             }
         }
 
-        // Create pending reservations (not yet paid)
+        // create pending reservations
         foreach ($events->take(4) as $index => $event) {
             $user = $users->get($index % $users->count());
             $hallRows = $event->hall->row_amt;
             $hallCols = $event->hall->col_amt;
 
-            // Create 1-2 pending reservations per event
+            // create 1-2 pending reservations per event
             for ($i = 0; $i < rand(1, 2); $i++) {
                 Reservation::create([
                     'event_id' => $event->id,
@@ -77,13 +75,13 @@ class ReservationSeeder extends Seeder
             }
         }
 
-        // Create cancelled reservations
+        // create cancelled reservations
         foreach ($events->take(3) as $index => $event) {
             $user = $users->get(($index + 1) % $users->count());
             $hallRows = $event->hall->row_amt;
             $hallCols = $event->hall->col_amt;
 
-            // Create 1 cancelled reservation per event
+            // create 1 cancelled reservation per event
             Reservation::create([
                 'event_id' => $event->id,
                 'user_id' => $user->id,

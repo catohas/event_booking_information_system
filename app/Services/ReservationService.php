@@ -14,10 +14,6 @@ class ReservationService
 
     /**
      * Validate that seats are within hall bounds.
-     *
-     * @param \App\Models\Event $event
-     * @param array $seats Array of ['seat_row' => int, 'seat_col' => int]
-     * @return array Array of invalid seats
      */
     public function validateSeatsWithinHall(Event $event, array $seats): array
     {
@@ -26,7 +22,7 @@ class ReservationService
         $rowMax = $event->hall->row_amt ?? null;
         $colMax = $event->hall->col_amt ?? null;
 
-        // If hall dimensions are not defined, skip validation
+        // skip validation if hall dimensions are not defined
         if ($rowMax === null || $colMax === null) {
             return $invalid;
         }
@@ -45,10 +41,6 @@ class ReservationService
 
     /**
      * Validate that seats are available (not already reserved)
-     *
-     * @param int $eventId
-     * @param array $seats Array of ['seat_row' => int, 'seat_col' => int]
-     * @return array Array of conflicting seats
      */
     public function validateSeatsAvailable(int $eventId, array $seats): array
     {
@@ -71,10 +63,6 @@ class ReservationService
 
     /**
      * Count active reservations for a user for a specific event
-     *
-     * @param int $eventId
-     * @param int $userId
-     * @return int
      */
     public function countUserReservations(int $eventId, int $userId): int
     {
@@ -86,38 +74,28 @@ class ReservationService
 
     /**
      * Create reservations for multiple seats
-     *
-     * @param int $eventId
-     * @param array $seats Array of ['seat_row' => int, 'seat_col' => int]
-     * @param int $userId
-     * @return Collection
-     * @throws \Exception
      */
     public function createReservations(int $eventId, array $seats, int $userId): Collection
     {
         return DB::transaction(function () use ($eventId, $seats, $userId) {
-            // Validate event exists (with hall relation for bounds check)
+
             $event = Event::with('hall')->findOrFail($eventId);
 
-            // Validate seats are within hall bounds
             $invalidSeats = $this->validateSeatsWithinHall($event, $seats);
             if (!empty($invalidSeats)) {
                 throw new \Exception('Některá sedadla jsou mimo rozsah sálu: ' . json_encode($invalidSeats));
             }
 
-            // Check seat conflicts with row-level locking
             $conflicts = $this->validateSeatsAvailable($eventId, $seats);
             if (!empty($conflicts)) {
                 throw new \Exception('Některá sedadla už jsou zarezervovaná: ' . json_encode($conflicts));
             }
 
-            // Check reservation limit
             $currentCount = $this->countUserReservations($eventId, $userId);
             if ($currentCount + count($seats) > self::MAX_RESERVATIONS_PER_EVENT) {
                 throw new \Exception('Je povoleno nejvýše ' . self::MAX_RESERVATIONS_PER_EVENT . ' rezervací na jednu událost');
             }
 
-            // Create reservations
             $reservations = collect();
             foreach ($seats as $seat) {
                 $reservation = Reservation::create([
@@ -136,9 +114,6 @@ class ReservationService
 
     /**
      * Cancel a reservation
-     *
-     * @param Reservation $reservation
-     * @return bool
      */
     public function cancelReservation(Reservation $reservation): bool
     {
@@ -148,9 +123,6 @@ class ReservationService
 
     /**
      * Confirm a reservation (mark as paid)
-     *
-     * @param Reservation $reservation
-     * @return bool
      */
     public function confirmReservation(Reservation $reservation): bool
     {

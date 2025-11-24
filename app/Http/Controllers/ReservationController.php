@@ -34,7 +34,7 @@ class ReservationController extends Controller
 
     public function store(ReservationRequest $request)
     {
-        // Ensure only authenticated users can create reservations
+        // only authenticated users can create reservations
         if (!Auth::check()) {
             abort(401);
         }
@@ -44,8 +44,7 @@ class ReservationController extends Controller
             $seats = $request->validated()['seats'];
             $userId = Auth::id();
 
-            // Create reservations
-            $reservations = $this->reservationService->createReservations(
+             $this->reservationService->createReservations(
                 $eventId,
                 $seats,
                 $userId
@@ -136,7 +135,7 @@ class ReservationController extends Controller
     {
         // attempt to find the event including relations, if it doesn't exist, redirect home
         $eventModel = Event::with(['hall', 'showing', 'reservations' => function ($query) {
-            $query->active(); // only load active reservations
+            $query->active();
         }])->find($event);
 
         if (!$eventModel) {

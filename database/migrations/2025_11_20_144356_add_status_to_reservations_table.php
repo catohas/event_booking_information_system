@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            // Add status enum: pending, confirmed, cancelled
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
-
-            // Add index for faster queries on active reservations
             $table->index(['event_id', 'status']);
         });
     }

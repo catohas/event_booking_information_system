@@ -41,7 +41,7 @@ class HallController extends Controller
         try {
             $hall->updateOrFail($request->validated());
 
-            // After updating dimensions, remove reservations outside the new bounds
+            // after updating dimensions, remove reservations outside the new bounds
             $hall->load('event.reservations');
             $hall->deleteOutOfBoundsReservations();
 

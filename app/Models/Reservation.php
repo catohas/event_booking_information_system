@@ -11,7 +11,6 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    // Status constants
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
     const STATUS_CANCELLED = 'cancelled';
@@ -35,7 +34,6 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Scopes
     public function scopePending(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_PENDING);

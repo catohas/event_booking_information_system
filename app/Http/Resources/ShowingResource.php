@@ -24,7 +24,6 @@ class ShowingResource extends JsonResource
             'actors' => $this->actors,
             'created_at' => $this->when($isAdminOrRedactor, $this->created_at),
             'updated_at' => $this->when($isAdminOrRedactor, $this->updated_at),
-            //'event' => EventResource::collection($this->whenLoaded('event')),
         ];
     }
 }

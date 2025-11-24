@@ -33,7 +33,7 @@ class Hall extends Model
             return;
         }
 
-        // Iterate through all events in this hall and clean their reservations
+        // iterate through all events in this hall and clean their reservations
         foreach ($this->event as $event) {
             $event->reservations()
                 ->where(function ($query) use ($rowMax, $colMax) {

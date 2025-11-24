@@ -9,11 +9,6 @@ use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\CashierController;
 use \App\Http\Controllers\Auth\RegisteredUserController;
 
-//Route::get('/events', [EventController::class, 'index']);
-//Route::get('/halls', [HallController::class, 'index']);
-//Route::get('/showings', [ShowingController::class, 'index']);
-//Route::get('/reservations', [ReservationController::class, 'index']);
-
 Route::get('/events/{event}/reservations', [ReservationController::class, 'eventReservations'])
     ->name('events.reservations');
 
