@@ -1,6 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 import { Reservation } from '@/types';
-import React from 'react';
+import React, { useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +17,7 @@ interface MyReservationsProps {
 }
 
 export default function MyReservations({ reservations }: MyReservationsProps) {
-    const [cancellingReservation, setCancellingReservation] = React.useState<Reservation | null>(null);
+    const [cancellingReservation, setCancellingReservation] = useState<Reservation | null>(null);
 
     const handleCancel = () => {
         if (!cancellingReservation?.id) return;
@@ -132,7 +132,6 @@ export default function MyReservations({ reservations }: MyReservationsProps) {
                     </p>
                 </div>
 
-                {/* Pending Reservations */}
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">Čeká na platbu</h2>
                     {reservations.pending.data.length === 0 ? (
@@ -150,7 +149,6 @@ export default function MyReservations({ reservations }: MyReservationsProps) {
                     )}
                 </section>
 
-                {/* Confirmed Reservations */}
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">Potvrzené rezervace</h2>
                     {reservations.confirmed.data.length === 0 ? (
@@ -168,7 +166,6 @@ export default function MyReservations({ reservations }: MyReservationsProps) {
                     )}
                 </section>
 
-                {/* Cancelled Reservations */}
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">Zrušené rezervace</h2>
                     {reservations.cancelled.data.length === 0 ? (
@@ -187,7 +184,6 @@ export default function MyReservations({ reservations }: MyReservationsProps) {
                 </section>
             </div>
 
-            {/* Cancel Confirmation Dialog */}
             <Dialog open={!!cancellingReservation} onOpenChange={(open) => !open && setCancellingReservation(null)}>
                 <DialogContent>
                     <DialogHeader>
@@ -206,6 +202,7 @@ export default function MyReservations({ reservations }: MyReservationsProps) {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
         </AppLayout>
     );
 }

@@ -72,7 +72,7 @@ export default function SeatReservationMatrix({ row_amt, col_amt, reservations, 
     const handleReserve = () => {
         if (selectedSeats.length > 0 && onReserve) {
             const seatsToReserve = [...selectedSeats]; // copy the array
-            setSelectedSeats([]); // clear selection immediately
+            setSelectedSeats([]);
             onReserve(seatsToReserve);
         }
     };

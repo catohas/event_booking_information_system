@@ -242,7 +242,6 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                 </Card>
             </div>
 
-            {/* Edit User Dialog */}
             <Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
                 <DialogContent>
                     <DialogHeader>
@@ -318,7 +317,6 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                 </DialogContent>
             </Dialog>
 
-            {/* Delete User Dialog */}
             <Dialog
                 open={!!deletingUser}
                 onOpenChange={() => setDeletingUser(null)}
@@ -349,6 +347,7 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
         </AppLayout>
     );
 }

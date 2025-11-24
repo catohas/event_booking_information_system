@@ -141,7 +141,7 @@ export default function CashierIndex({ reservations }: CashierIndexProps) {
                                         className="cursor-pointer select-none"
                                         onClick={() => toggleSort('event_date')}
                                     >
-                                        Datum představení
+                                        Datum události
                                         {sort.key === 'event_date' && (
                                             <span className="ml-1 text-xs">
                                                 {sort.direction === 'asc' ? '▲' : '▼'}

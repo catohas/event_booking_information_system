@@ -28,11 +28,9 @@ export default function Welcome() {
                 />
             </Head>
             <div className="min-h-screen">
-                {/* Hero Section */}
                 <div className="relative overflow-hidden">
 
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-                        {/* Auth buttons in top right */}
                         {!auth.user && (
                             <div className="absolute top-6 right-6 flex items-center gap-3">
                                 <Link
@@ -50,7 +48,6 @@ export default function Welcome() {
                             </div>
                         )}
 
-                        {/* Header content */}
                         <div className="text-center space-y-6 max-w-3xl mx-auto">
                             <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
                                 Aktuální program
@@ -63,7 +60,6 @@ export default function Welcome() {
                     </div>
                 </div>
 
-                {/* Events Section */}
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
                     {events.length ? (
                         <div className="space-y-8">
@@ -91,6 +87,7 @@ export default function Welcome() {
                         </div>
                     )}
                 </div>
+
             </div>
         </AppLayout>
     );

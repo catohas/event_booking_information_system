@@ -16,7 +16,6 @@ export default function Reservations() {
 
     const handleReserve = (seats: SelectedSeat[]) => {
         if (!isAuthenticated) {
-            // Guest user - show information dialog and redirect to login/registration
             setShowAuthRequiredDialog(true);
             return;
         }
@@ -89,7 +88,6 @@ export default function Reservations() {
             </div>
 
 
-            {/* Auth Required Dialog for guests */}
             <Dialog open={showAuthRequiredDialog} onOpenChange={setShowAuthRequiredDialog}>
                 <DialogContent>
                     <DialogHeader>
@@ -108,6 +106,7 @@ export default function Reservations() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
         </AppLayout>
     );
 }

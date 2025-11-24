@@ -92,6 +92,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         price: '',
     });
 
+    // Hall sorting
     const {
         sortedItems: sortedHalls,
         sort: hallSort,
@@ -105,6 +106,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         col_amt: (a, b) => a.col_amt - b.col_amt,
     });
 
+    // Showing sorting
     const {
         sortedItems: sortedShowings,
         sort: showingSort,
@@ -118,6 +120,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         length: (a, b) => a.length.localeCompare(b.length),
     });
 
+    // Event sorting
     const {
         sortedItems: sortedEvents,
         sort: eventSort,
@@ -132,7 +135,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         showing: (a, b) => (a.showing?.name || '').localeCompare(b.showing?.name || ''),
     });
 
-    // Hall handlers
     const handleAddHall = () => {
         setAddingHall(true);
         hallForm.reset();
@@ -181,7 +183,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         });
     };
 
-    // Showing handlers
     const handleAddShowing = () => {
         setAddingShowing(true);
         showingForm.reset();
@@ -250,7 +251,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
         }
     };
 
-    // Event handlers
     const handleAddEvent = () => {
         setAddingEvent(true);
         eventForm.reset();
@@ -314,7 +314,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 <TabsTrigger value="events" className="cursor-pointer">Události</TabsTrigger>
                             </TabsList>
 
-                            {/* Halls Tab */}
                             <TabsContent value="halls" className="space-y-4">
                                 <div className="flex justify-end">
                                     <Button onClick={handleAddHall}>
@@ -391,7 +390,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 </Table>
                             </TabsContent>
 
-                            {/* Showings Tab */}
                             <TabsContent value="showings" className="space-y-4">
                                 <div className="flex justify-end">
                                     <Button onClick={handleAddShowing}>
@@ -480,7 +478,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 </Table>
                             </TabsContent>
 
-                            {/* Events Tab */}
                             <TabsContent value="events" className="space-y-4">
                                 <div className="flex justify-end">
                                     <Button onClick={handleAddEvent}>
@@ -575,7 +572,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </Card>
             </div>
 
-            {/* Hall Dialog */}
             <Dialog open={addingHall || editingHall !== null} onOpenChange={(open) => {
                 if (!open) {
                     setAddingHall(false);
@@ -638,7 +634,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </DialogContent>
             </Dialog>
 
-            {/* Showing Dialog */}
             <Dialog open={addingShowing || editingShowing !== null} onOpenChange={(open) => {
                 if (!open) {
                     setAddingShowing(false);
@@ -744,7 +739,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </DialogContent>
             </Dialog>
 
-            {/* Event Dialog */}
             <Dialog open={addingEvent || editingEvent !== null} onOpenChange={(open) => {
                 if (!open) {
                     setAddingEvent(false);
@@ -831,7 +825,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </DialogContent>
             </Dialog>
 
-            {/* Delete Hall Dialog */}
             <Dialog open={deletingHall !== null} onOpenChange={(open) => !open && setDeletingHall(null)}>
                 <DialogContent>
                     <DialogHeader>
@@ -851,7 +844,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </DialogContent>
             </Dialog>
 
-            {/* Delete Showing Dialog */}
             <Dialog open={deletingShowing !== null} onOpenChange={(open) => !open && setDeletingShowing(null)}>
                 <DialogContent>
                     <DialogHeader>
@@ -871,7 +863,6 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                 </DialogContent>
             </Dialog>
 
-            {/* Delete Event Dialog */}
             <Dialog open={deletingEvent !== null} onOpenChange={(open) => !open && setDeletingEvent(null)}>
                 <DialogContent>
                     <DialogHeader>
@@ -890,6 +881,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
         </AppLayout>
     );
 }

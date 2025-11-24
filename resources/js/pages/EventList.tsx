@@ -29,7 +29,6 @@ export default function EventList({ events }: EventListProps) {
                         key={event.id}
                         className="group overflow-hidden transition-all duration-200 hover:shadow-md py-0 pb-6"
                     >
-                        {/* Image / Poster */}
                         <div className="relative aspect-video w-full bg-muted/40">
                             {event.showing.image_path ? (
                                 <img
@@ -44,7 +43,6 @@ export default function EventList({ events }: EventListProps) {
                                 </div>
                             )}
 
-                            {/* Overlays */}
                             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-15 bg-gradient-to-t from-background/100 to-transparent" />
                             <div className="absolute left-3 top-3 flex items-center gap-2">
                                 {event.showing.type && (
@@ -61,7 +59,6 @@ export default function EventList({ events }: EventListProps) {
                             </div>
                         </div>
 
-                        {/* Textual content */}
                         <CardHeader className="gap-2">
                             <CardTitle className="text-base sm:text-lg">{event.showing.name}</CardTitle>
                             <CardDescription className="flex items-center gap-2">
