@@ -15,40 +15,40 @@ class DatabaseSeeder extends Seeder
         //User::factory(10)->create();
 
          User::firstOrCreate(
-            ['email' => 'test@example.com'],
+            ['email' => 'viewer@iisprojekt.com'],
             [
-                'name' => 'Test User',
-                'password' => 'password',
+                'name' => 'Petr Novák',
+                'password' => 'iis_viewer',
                 'role' => 'viewer',
                 'email_verified_at' => now(),
             ]
         );
 
          User::firstOrCreate(
-            ['email' => 'admin@a.com'],
+            ['email' => 'admin@iisprojekt.com'],
             [
-                'name' => 'Admin User',
-                'password' => 'admin',
+                'name' => 'Kateřina Novotná',
+                'password' => 'iis_admin',
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
         );
 
         User::firstOrCreate(
-            ['email' => 'cashier@c.com'],
+            ['email' => 'cashier@iisprojekt.com'],
             [
-                'name' => 'Cashier User',
-                'password' => 'cashier',
+                'name' => 'Karel Hrubý',
+                'password' => 'iis_cashier',
                 'role' => 'cashier',
                 'email_verified_at' => now(),
             ]
         );
 
         User::firstOrCreate(
-            ['email' => 'redactor@r.com'],
+            ['email' => 'redactor@iisprojekt.com'],
             [
-                'name' => 'Redactor User',
-                'password' => 'redactor',
+                'name' => 'Filip Hartel',
+                'password' => 'iis_redactor',
                 'role' => 'redactor',
                 'email_verified_at' => now(),
             ]

@@ -15,9 +15,9 @@ class ReservationSeeder extends Seeder
      */
     public function run(): void
     {
-        $testUser = User::where('email', 'test@example.com')->first();
-        $cashier = User::where('email', 'cashier@c.com')->first();
-        $redactor = User::where('email', 'redactor@r.com')->first();
+        $testUser = User::where('email', 'viewer@iisprojekt.com')->first();
+        $cashier = User::where('email', 'cashier@iisprojekt.com')->first();
+        $redactor = User::where('email', 'redactor@iisprojekt.com')->first();
 
         $events = Event::with('hall')->take(5)->get();
 
