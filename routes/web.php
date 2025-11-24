@@ -9,12 +9,16 @@ use Inertia\Inertia;
 Route::get('/', function () {
     $now = now();
 
-    $upcomingEvents = Event::with(['hall', 'showing', 'reservations'])
+    $upcomingEvents = Event::with(['hall', 'showing', 'reservations' => function ($query) {
+        $query->active();
+    }])
         ->where('starts_at', '>=', $now)
         ->orderBy('starts_at', 'asc')
         ->get();
 
-    $pastEvents = Event::with(['hall', 'showing', 'reservations'])
+    $pastEvents = Event::with(['hall', 'showing', 'reservations' => function ($query) {
+        $query->active();
+    }])
         ->where('starts_at', '<', $now)
         ->orderBy('starts_at', 'desc')
         ->get();
