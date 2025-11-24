@@ -121,11 +121,30 @@ class EventSeeder extends Seeder
     private function events(): array
     {
         return [
+            // past events
+            [
+                'title' => 'Avengers: Infinity War',
+                'hall_key' => 'a2',
+                'showing_key' => 'movie',
+                'days_from_now' => -7,
+                'time' => [18, 0],
+                'price' => 350,
+            ],
+            [
+                'title' => 'Krásná vzpomínka',
+                'hall_key' => 'b1',
+                'showing_key' => 'play',
+                'days_from_now' => -3,
+                'time' => [20, 0],
+                'price' => 220,
+            ],
+
+            // future events
             [
                 'title' => 'Krásná vzpomínka',
                 'hall_key' => 'a1',
                 'showing_key' => 'play',
-                'days_from_now' => 1,
+                'days_from_now' => 15,
                 'time' => [19, 30],
                 'price' => 220,
             ],
@@ -133,7 +152,7 @@ class EventSeeder extends Seeder
                 'title' => 'Avengers: Infinity War',
                 'hall_key' => 'a1',
                 'showing_key' => 'movie',
-                'days_from_now' => 3,
+                'days_from_now' => 10,
                 'time' => [15, 0],
                 'price' => 350,
             ],
@@ -141,7 +160,7 @@ class EventSeeder extends Seeder
                 'title' => 'Veselá vdova',
                 'hall_key' => 'a2',
                 'showing_key' => 'musical',
-                'days_from_now' => 5,
+                'days_from_now' => 20,
                 'time' => [20, 0],
                 'price' => 260,
             ],
@@ -149,7 +168,7 @@ class EventSeeder extends Seeder
                 'title' => 'Historie Říma',
                 'hall_key' => 'b1',
                 'showing_key' => 'lecture',
-                'days_from_now' => 2,
+                'days_from_now' => 30,
                 'time' => [21, 45],
                 'price' => 200,
             ],

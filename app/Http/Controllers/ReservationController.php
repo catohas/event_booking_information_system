@@ -142,6 +142,11 @@ class ReservationController extends Controller
             return redirect()->route('home')->with('info', 'Tato událost byla odstraněna.');
         }
 
+        // check if event has already happened
+        if ($eventModel->starts_at < now()) {
+            return redirect()->route('home')->with('error', 'Nelze vytvořit rezervaci pro již proběhlou událost.');
+        }
+
         return Inertia::render('reservations', [
             'event' => new EventResource($eventModel),
         ]);

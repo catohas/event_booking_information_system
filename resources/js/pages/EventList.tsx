@@ -18,16 +18,19 @@ export default function EventList({ events }: EventListProps) {
     const formatTime = (iso: string) =>
         new Intl.DateTimeFormat('cs-CZ', { hour: '2-digit', minute: '2-digit' }).format(new Date(iso));
 
+    const isPastEvent = (startsAt: string) => new Date(startsAt) < new Date();
+
     return (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => {
                 const totalSeats = event.hall.row_amt * event.hall.col_amt;
                 const availableSeats = Math.max(totalSeats - event.reservations.length, 0);
+                const isPast = isPastEvent(event.starts_at);
 
                 return (
                     <Card
                         key={event.id}
-                        className="group overflow-hidden transition-all duration-200 hover:shadow-md py-0 pb-6"
+                        className={`group overflow-hidden transition-all duration-200 hover:shadow-md py-0 pb-6 ${isPast ? 'opacity-65' : ''}`}
                     >
                         <div className="relative aspect-video w-full bg-muted/40">
                             {event.showing.image_path ? (
@@ -90,9 +93,15 @@ export default function EventList({ events }: EventListProps) {
                             <div className="text-sm text-muted-foreground">
                                 Cena lístku: <span className="text-foreground font-medium">{event.price} Kč</span>
                             </div>
-                            <Button asChild className="shrink-0">
-                                <Link href={reservations.url(event.id)}>Zobrazit rezervace</Link>
-                            </Button>
+                            {isPast ? (
+                                <Button className="shrink-0" disabled>
+                                    Událost proběhla
+                                </Button>
+                            ) : (
+                                <Button asChild className="shrink-0">
+                                    <Link href={reservations.url(event.id)}>Zobrazit rezervace</Link>
+                                </Button>
+                            )}
                         </CardFooter>
                     </Card>
                 );

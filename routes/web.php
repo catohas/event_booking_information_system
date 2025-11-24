@@ -1,12 +1,27 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Resources\EventResource;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function (EventController $eventController) {
+Route::get('/', function () {
+    $now = now();
+
+    $upcomingEvents = Event::with(['hall', 'showing', 'reservations'])
+        ->where('starts_at', '>=', $now)
+        ->orderBy('starts_at', 'asc')
+        ->get();
+
+    $pastEvents = Event::with(['hall', 'showing', 'reservations'])
+        ->where('starts_at', '<', $now)
+        ->orderBy('starts_at', 'desc')
+        ->get();
+
     return Inertia::render('welcome', [
-        'events' => $eventController->index()
+        'upcomingEvents' => EventResource::collection($upcomingEvents),
+        'pastEvents' => EventResource::collection($pastEvents),
     ]);
 })->name('home');
 

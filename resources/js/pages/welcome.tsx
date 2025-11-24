@@ -13,8 +13,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Welcome() {
-    const { props } = usePage<{ events: { data: Event[] } }>();
-    const events = props.events.data;
+    const { props } = usePage<{ upcomingEvents: { data: Event[] }, pastEvents: { data: Event[] } }>();
+    const upcomingEvents = props.upcomingEvents.data;
+    const pastEvents = props.pastEvents.data;
 
     const { auth } = usePage<SharedData>().props;
 
@@ -61,20 +62,20 @@ export default function Welcome() {
                 </div>
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-                    {events.length ? (
-                        <div className="space-y-8">
+                    {upcomingEvents.length > 0 ? (
+                        <div className="space-y-8 mb-16">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                                     Nadcházející události
                                 </h2>
                                 <span className="text-md text-gray-500 dark:text-gray-400">
-                                    {events.length} {events.length === 1 ? 'událost' : events.length < 5 ? 'události' : 'událostí'}
+                                    {upcomingEvents.length} {upcomingEvents.length === 1 ? 'událost' : upcomingEvents.length < 5 ? 'události' : 'událostí'}
                                 </span>
                             </div>
-                            <EventList events={events} />
+                            <EventList events={upcomingEvents} />
                         </div>
                     ) : (
-                        <div className="text-center py-20">
+                        <div className="text-center py-20 mb-16">
                             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
                                 <Film className="w-8 h-8 text-gray-900 dark:text-white" />
                             </div>
@@ -84,6 +85,20 @@ export default function Welcome() {
                             <p className="text-gray-600 dark:text-gray-400">
                                 Zatím zde nejsou vystaveny žádné události. Vraťte se prosím později.
                             </p>
+                        </div>
+                    )}
+
+                    {pastEvents.length > 0 && (
+                        <div className="space-y-8">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    Předchozí události
+                                </h2>
+                                <span className="text-md text-gray-500 dark:text-gray-400">
+                                    {pastEvents.length} {pastEvents.length === 1 ? 'událost' : pastEvents.length < 5 ? 'události' : 'událostí'}
+                                </span>
+                            </div>
+                            <EventList events={pastEvents} />
                         </div>
                     )}
                 </div>
