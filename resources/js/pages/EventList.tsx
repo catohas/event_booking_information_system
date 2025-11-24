@@ -95,7 +95,7 @@ export default function EventList({ events }: EventListProps) {
                             </div>
                             {isPast ? (
                                 <Button className="shrink-0" disabled>
-                                    Událost proběhla
+                                    Událost již proběhla
                                 </Button>
                             ) : (
                                 <Button asChild className="shrink-0">

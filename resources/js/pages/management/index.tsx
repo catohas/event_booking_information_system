@@ -591,7 +591,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                     <form onSubmit={handleSaveHall}>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="hall-name">Název</Label>
+                                <Label htmlFor="hall-name">Název *</Label>
                                 <Input
                                     id="hall-name"
                                     value={hallForm.data.name}
@@ -601,7 +601,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="hall-row-amt">Počet řad</Label>
+                                <Label htmlFor="hall-row-amt">Počet řad *</Label>
                                 <Input
                                     id="hall-row-amt"
                                     type="number"
@@ -613,7 +613,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="hall-col-amt">Počet sloupců</Label>
+                                <Label htmlFor="hall-col-amt">Počet sloupců *</Label>
                                 <Input
                                     id="hall-col-amt"
                                     type="number"
@@ -654,7 +654,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                     <form onSubmit={handleSaveShowing}>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="showing-name">Název</Label>
+                                <Label htmlFor="showing-name">Název *</Label>
                                 <Input
                                     id="showing-name"
                                     value={showingForm.data.name}
@@ -663,7 +663,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="showing-type">Typ</Label>
+                                <Label htmlFor="showing-type">Typ *</Label>
                                 <Input
                                     id="showing-type"
                                     value={showingForm.data.type}
@@ -682,7 +682,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="showing-length">Délka (HH:MM:SS)</Label>
+                                <Label htmlFor="showing-length">Délka (HH:MM:SS) *</Label>
                                 <Input
                                     id="showing-length"
                                     type="text"
@@ -758,7 +758,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                     <form onSubmit={handleSaveEvent}>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="event-showing">Představení</Label>
+                                <Label htmlFor="event-showing">Představení *</Label>
                                 <Select
                                     value={eventForm.data.showing_id}
                                     onValueChange={(value) => eventForm.setData('showing_id', value)}
@@ -777,7 +777,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 </Select>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="event-hall">Sál</Label>
+                                <Label htmlFor="event-hall">Sál *</Label>
                                 <Select
                                     value={eventForm.data.hall_id}
                                     onValueChange={(value) => eventForm.setData('hall_id', value)}
@@ -796,7 +796,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 </Select>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="event-starts-at">Začátek</Label>
+                                <Label htmlFor="event-starts-at">Začátek *</Label>
                                 <Input
                                     id="event-starts-at"
                                     type="datetime-local"
@@ -806,7 +806,7 @@ export default function ManagementIndex({ halls, showings, events }: ManagementI
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="event-price">Cena (Kč)</Label>
+                                <Label htmlFor="event-price">Cena (Kč) *</Label>
                                 <Input
                                     id="event-price"
                                     type="number"
