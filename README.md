@@ -1,10 +1,14 @@
-# Cultural Events Ticket Booking Information System
+# Event Ticket Booking Information System
 
 ## Overview
 
 The task is to design an information system for booking tickets for cultural events such as film screenings, lectures, and performances held in managed halls.
 
 The system allows users to manage halls, cultural events, performances, and seat reservations.
+
+## Used Technologies
+
+The assignment was implemented using Laravel as the framework for the backend and React.js + TypeScript as the tech for the frontend.
 
 ---
 
