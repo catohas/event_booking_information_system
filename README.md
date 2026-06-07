@@ -1,5 +1,7 @@
 # Event Ticket Booking Information System
 
+![Screenshot](screenshot.png)
+
 ## Overview
 
 The task is to design an information system for booking tickets for cultural events such as film screenings, lectures, and performances held in managed halls.
